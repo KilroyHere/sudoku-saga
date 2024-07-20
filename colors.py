@@ -1,6 +1,6 @@
 # SGR color constants
 # rene-d 2018
-
+# https://gist.github.com/rene-d/9e584a7dd2935d0f461904b9f2950007
 
 class Colors:
     """ ANSI color codes """

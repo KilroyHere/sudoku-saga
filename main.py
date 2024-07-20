@@ -1,7 +1,7 @@
 # main.py
 
-from board import Board 
 from sudoku import Sudoku
+from board import Board 
 from backtracking_solver import BacktrackingSolver
 from validator import Validator
 
@@ -16,7 +16,6 @@ def main():
     sudoku = Sudoku(board, solver, validator)
 
     # Print the Sudoku board
-    # print("Sudoku Board:")
     sudoku.board.display_board()
     sudoku.board.display_candidates()
 
