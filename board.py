@@ -1,7 +1,6 @@
 from utilities.colors import Colors
 import copy
 
-
 class Board:
 
   def __init__(self, board_string):
@@ -14,6 +13,9 @@ class Board:
 
   def string_to_board(self, board_string):
     """Converts a string representation of a Sudoku board to a 2D list."""
+    assert len(board_string) == 81, "Illegal Board String"
+    assert all(char in '0123456789' for char in board_string), "Illegal Board String"
+
     board = []
     for i in range(0, len(board_string), 9):
       row = [
@@ -29,7 +31,7 @@ class Board:
     ] for row in self.cells]
     return candidates
 
-  def update_candidates(self):
+  def update_candidates(self, updated_row = None, updated_col = None):
     """Updates the candidates for each cell based on the current board state."""
     for row in range(9):
       for col in range(9):
@@ -39,6 +41,9 @@ class Board:
           possible_numbers -= self.get_col_numbers(col)
           possible_numbers -= self.get_box_numbers(row, col)
           self.candidates[row][col] = possible_numbers
+        else:
+          self.candidates[row][col] = set()
+          
 
   # Getter Functions ====================================================================
 

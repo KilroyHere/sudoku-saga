@@ -2,6 +2,16 @@ class Validator:
 
   def __init__(self):
     pass
+  
+  def checkPlacement(self, board, num, row, col):
+      """Check if placing num at board[row][col] is valid."""
+      if num in board.get_row_numbers(row):
+          return False
+      if num in board.get_col_numbers(col):
+          return False
+      if num in board.get_box_numbers(row, col):
+          return False
+      return True
 
   def validate(self, board):
     """Checks if the current board state is a valid Sudoku."""

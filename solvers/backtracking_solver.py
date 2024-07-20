@@ -1,4 +1,3 @@
-
 from solvers.solver import Solver
 class BacktrackingSolver(Solver):
 
@@ -6,7 +5,33 @@ class BacktrackingSolver(Solver):
     super().__init__( validator, mode)
 
   def isStateMachine(self):
-    return True
+    return False
   
   def solve(self):
-    pass
+        """Solve the Sudoku puzzle using backtracking."""
+        self.board.update_candidates()  # Update candidates before starting
+        if self._solve_board():
+            return True
+        else:
+            return False
+    
+  def _solve_board(self):
+      """Recursive helper function to solve the Sudoku board."""
+      for row in range(9):
+          for col in range(9):
+              if self.board.cells[row][col] is None:
+                  for num in self.board.candidates[row][col]:
+                      if self.validator.checkPlacement(self.board, num, row, col):
+                          self.board.cells[row][col] = num
+                          self.board.update_candidates()  # Update candidates after placing a number
+ 
+                          if self._solve_board():
+                              return True  # Solution found
+                          
+                          # If no solution, backtrack
+                          self.board.cells[row][col] = None
+                          self.board.update_candidates()
+
+                  return False  # No valid number found, need to backtrack
+              
+      return True  # All cells are filled

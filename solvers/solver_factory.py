@@ -1,5 +1,3 @@
-# factory.py
-
 from solvers.backtracking_solver import BacktrackingSolver
 from solvers.validator import Validator
 

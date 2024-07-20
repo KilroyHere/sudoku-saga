@@ -8,7 +8,7 @@ class Sudoku:
     self.solver.board = self.board # Shallow Copy
     self.validator = self.solver.validator
     
-    
+    assert self.validator.validate(board.cells), "Illegal Numbers Input"
     assert self.solver.board == self.board, "Solver and Sudoku boards don't match!"
   
   def solve(self):
@@ -16,5 +16,6 @@ class Sudoku:
      pass
    else:
      self.solver.solve()
+
 
                  
