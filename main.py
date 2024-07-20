@@ -2,22 +2,20 @@
 
 from sudoku import Sudoku
 from board import Board 
-from backtracking_solver import BacktrackingSolver
-from validator import Validator
+from solvers.solver_factory import SolverFactory
+from solvers.backtracking_solver import BacktrackingSolver
 
 def main():
     # Example Sudoku puzzle string
     board_string = "000705306035040781007030050041000008063000120500000437000070000978050010350201070"
-    # Create auxillary objects
-    solver = BacktrackingSolver()
+    # Create the Board
     board = Board(board_string)
-    validator = Validator()
-    
-    sudoku = Sudoku(board, solver, validator)
-
-    # Print the Sudoku board
-    sudoku.board.display_board()
-    sudoku.board.display_candidates()
+    # Create the Solver
+    solver  = SolverFactory().create_solver(solverType="Backtracking")
+    # Create Sudoku Game
+    sudoku = Sudoku(board, solver)
+    # Solve The Sudoku 
+    sudoku.solve()
 
 if __name__ == "__main__":
     main()

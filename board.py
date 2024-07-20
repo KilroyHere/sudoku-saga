@@ -1,4 +1,4 @@
-from colors import Colors
+from utilities.colors import Colors
 import copy
 
 
@@ -40,12 +40,20 @@ class Board:
           possible_numbers -= self.get_box_numbers(row, col)
           self.candidates[row][col] = possible_numbers
 
+  # Getter Functions ====================================================================
+
+  def get_row(self,row):
+    return self.cells[row]
+          
   def get_row_numbers(self, row):
     """Returns a set of numbers present in the specified row."""
     return {
         self.cells[row][col]
         for col in range(9) if self.cells[row][col] is not None
     }
+  
+  def get_col_list(self,col):
+    return [row[col] for row in self.cells]
 
   def get_col_numbers(self, col):
     """Returns a set of numbers present in the specified column."""
@@ -65,6 +73,9 @@ class Board:
         if self.cells[r][c] is not None
     }
     return box_numbers
+  
+
+  # Display Functions====================================================================
 
   def display_board(self):
     """Display the board with original values in red"""
@@ -129,4 +140,3 @@ class Board:
       rows.append(row)
     return rows
 
-  # def format_candidate_row(self,index,candidates):
