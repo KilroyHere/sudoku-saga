@@ -1,4 +1,4 @@
-# First Pass TODO 
+# First Pass 
 - Backtracking
 
 # Strategies TODO
@@ -52,6 +52,10 @@
 - Death Blossom
 - Pattern Overlay
 
+# Constraint Satisfaction Problem TODO  
+- MAC
+- FC
+
 <hr>
 
 # DONE:
@@ -59,3 +63,4 @@
 - Display
 - Validator
 - ANSI Coloring
+- First Pass (Naive Backtracking)
