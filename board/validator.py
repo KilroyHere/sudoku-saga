@@ -6,9 +6,9 @@ class Validator:
  
   def is_solved(self, cells):
     if any(value is None for row in cells for value in row):
-      return True
-    else:
       return False
+    else:
+      return True
 
  
   def check_placement(self, num, row_nums, col_nums, box_nums):

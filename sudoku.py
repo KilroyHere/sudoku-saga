@@ -40,7 +40,7 @@ class SudokuStateMachine:
       # print("Best strategy: "+best_strategy)
       # TODO: Maybe present an explanation for the strategy
       if(strategy_found):
-        self.current_state = "insert_values"
+        self.current_state = "applying_strategy"
       else:
         self.current_state = "unsolvable"
 
@@ -52,11 +52,11 @@ class SudokuStateMachine:
       self.current_state = "checking_if_solved"
 
   def checking_if_solved(self):
-      """Verify if the sudoku is solved."""
-      if self.board.is_solved():
-          self.current_state = "solved"
-      else:
-          self.current_state = "finding_best_strategy"
+    """Verify if the sudoku is solved."""
+    if self.solver.board.is_solved():
+        self.current_state = "solved"
+    else:
+        self.current_state = "finding_best_strategy"
   
   def solved(self):
     # Stop

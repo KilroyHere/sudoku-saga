@@ -24,16 +24,7 @@ class StrategicSolver(Solver):
         should be implemented by subclasses to update the board.
 
         Returns:
-            list: A list of values inserted into the board.
+            list: A list of values inserted into the board, with row, col Information.
         """
-        raise NotImplementedError("Implement.")
+        raise NotImplementedError("Yet to Implement.")
     
-    def solve(self):
-        """
-        Solves the Sudoku puzzle using the implemented strategy. This method 
-        should call the necessary methods to apply strategies and update the board.
-
-        Returns:
-            bool: True if the puzzle is solved, False otherwise.
-        """
-        raise NotImplementedError("Subclasses should implement this method.")
