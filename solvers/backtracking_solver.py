@@ -1,15 +1,15 @@
 from solvers.solver import Solver
 class BacktrackingSolver(Solver):
 
-  def __init__(self, mode = "Default"):
-    super().__init__(mode)
+  def __init__(self, board, mode = "Default"):
+    super().__init__(board, mode)
     
   def is_strategy_based(self):
     return False
   
   def solve(self):
         """Solve the Sudoku puzzle using backtracking."""
-        self.board.update_candidates()  # Update candidates before starting
+        self.board.update_candidates_backtracking()  # Update candidates before starting
         if self._solve_board():
             return True
         else:
@@ -23,14 +23,14 @@ class BacktrackingSolver(Solver):
                   for num in self.board.candidates[row][col]:
                       if self.board.check_placement(num, row, col):
                           self.board.cells[row][col] = num
-                          self.board.update_candidates()  # Update candidates after placing a number
+                          self.board.update_candidates_backtracking()  # Update candidates after placing a number
  
                           if self._solve_board():
                               return True  # Solution found
                           
                           # If no solution, backtrack
                           self.board.cells[row][col] = None
-                          self.board.update_candidates()
+                          self.board.update_candidates_backtracking()
 
                   return False  # No valid number found, need to backtrack
               

@@ -11,7 +11,7 @@ class Board:
     self.colors = Colors()
     self.validator = Validator()
 
-    self.update_candidates()
+    self.update_candidates_backtracking()
     assert self.validator.validate(self.cells), "Illegal Numbers Input"
 
   def string_to_board(self, board_string):
@@ -29,12 +29,40 @@ class Board:
 
   def initialize_candidates(self):
     """Initializes the candidates for each cell."""
-    candidates = [[
-        set(range(1, 10)) if cell is None else set() for cell in row
-    ] for row in self.cells]
+    candidates = [
+      [set(range(1, 10)) if cell is None else set() for cell in row] 
+        for row in self.cells]
     return candidates
 
-  def update_candidates(self, updated_row = None, updated_col = None):
+ # Candidate Functions ========================================================
+
+  def update_candidates_on_insert(self, updated_row, updated_col):
+    """Updates the candidates for each cell based on the new value inserted."""
+    inserted_value = self.cells[updated_row][updated_col]
+    
+    box_row_start = (updated_row // 3) * 3
+    box_col_start = (updated_col // 3) * 3
+
+    self.candidates[updated_row][updated_col] = set()
+
+    # Update candidates in the row
+    for col in range(9):
+        if col != updated_col:
+            self.candidates[updated_row][col].discard(inserted_value)
+
+    # Update candidates in the column
+    for row in range(9):
+        if row != updated_row:
+            self.candidates[row][updated_col].discard(inserted_value)
+
+    # Update candidates in the box
+    for row in range(box_row_start, box_row_start + 3):
+        for col in range(box_col_start, box_col_start + 3):
+            if row != updated_row or col != updated_col:
+                self.candidates[row][col].discard(inserted_value)
+
+  
+  def update_candidates_backtracking(self):
     """Updates the candidates for each cell based on the current board state."""
     for row in range(9):
       for col in range(9):
@@ -47,7 +75,8 @@ class Board:
         else:
           self.candidates[row][col] = set()
          
-  # Validator Functions
+  # Validator Functions =======================================================
+  
   def check_placement(self, num, row, col):
     row_nums = self.get_row_numbers(row)
     col_nums = self.get_col_numbers(col)
@@ -56,7 +85,9 @@ class Board:
  
   def is_solved(self):
     return self.validator.is_solved(self.cells)
-  # Getter Functions ====================================================================
+  
+  
+  # Getter Functions ==========================================================
 
   def get_row(self,row):
     return self.cells[row]
@@ -119,29 +150,29 @@ class Board:
 
   def display_candidates(self):
     """TODO: Update to a GUI"""
-    row_list = []
-    for candidates_row in self.candidates:
-      row_list += self.get_candidate_row(candidates_row)
+    row_list = [num for row in self.candidates for num in self.get_candidate_row(row)]
+    border = "+" + ("═" * 9 + "+") * 9
+    mid_border = "+" + ("-" * 9 + "+") * 9
 
-    print("+" + ("═" * 9 + "+") * 9)
-
+    print(border)
     for i, row in enumerate(row_list):
-      if (i % 9 == 0 and i != 0):
-        print("+" + ("═" * 9 + "+") * 9)
-      elif (i % 3 == 0 and i != 0):
-        print("+" + ("-" * 9 + "+") * 9)
-      row_string = ""
-      for j, num in enumerate(row):
-        if (j == 0):
-          row_string += '‖'
-        row_string += " " + str(num) + " "
-        if ((j + 1) % 9 == 0):
-          row_string += '‖'
-        elif ((j + 1) % 3 == 0):
-          row_string += '|'
-      print(row_string)
-
-    print("+" + ("═" * 9 + "+") * 9)
+        if i > 0:
+            if i % 9 == 0:
+                print(border)
+            elif i % 3 == 0:
+                print(mid_border)
+        
+        row_string = '‖'
+        for j, num in enumerate(row, 1):
+            row_string += f" {num} "
+            if j % 9 == 0:
+                row_string += '‖'
+            elif j % 3 == 0:
+                row_string += '|'
+        
+        print(row_string)
+    
+    print(border)
 
   def get_candidate_row(self, candidates_row):
     rows = []

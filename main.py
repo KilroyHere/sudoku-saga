@@ -6,12 +6,13 @@ from solvers.backtracking_solver import BacktrackingSolver
 
 def main():
     # Example Sudoku puzzle string
-    board_string = "309000400200709000087000000750060230600904008028050041000000590000106007006000104"
+    # This string represents one of the easiest boards
+    board_string = "300967001040302080020000070070000090000873000500010003004705100905000207800621004"
     # Create the Board
     board = Board(board_string)
     # Create the Solver
-    solver  = SolverFactory().create_solver(solverType="Backtracking")
-    # solver  = SolverFactory().create_solver(solverType="Strategic")
+    # solver  = SolverFactory().create_solver(board, solverType="Backtracking")
+    solver = SolverFactory().create_solver(board, solverType="Strategic")
     # Create Sudoku Game
     sudoku = Sudoku(board, solver)
     # Solve The Sudoku 
