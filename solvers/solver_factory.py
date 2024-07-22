@@ -1,13 +1,17 @@
 from solvers.backtracking_solver import BacktrackingSolver
-from solvers.validator import Validator
+from solvers.strategic_solver import StrategicSolver
 
 class SolverFactory:
     @staticmethod
     def create_solver( solverType="Backtracking", mode="Default"):
         # Create and return an instance of BacktrackingSolver
-        validator = Validator()
         match solverType:
             case "Backtracking":
-                return BacktrackingSolver(validator, mode)
+                print("Creating a Backtracking Solver")
+                return BacktrackingSolver(mode)
+            case "Strategic":
+                print("Creating a Strategic Solver")
+                return StrategicSolver(mode)
             case _:
-                return BacktrackingSolver(validator, mode)
+                print("Creating a Backtracking Solver")
+                return BacktrackingSolver(mode)

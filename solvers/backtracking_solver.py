@@ -1,10 +1,10 @@
 from solvers.solver import Solver
 class BacktrackingSolver(Solver):
 
-  def __init__(self,validator, mode = "Default"):
-    super().__init__( validator, mode)
-
-  def isStateMachine(self):
+  def __init__(self, mode = "Default"):
+    super().__init__(mode)
+    
+  def is_strategy_based(self):
     return False
   
   def solve(self):
@@ -21,7 +21,7 @@ class BacktrackingSolver(Solver):
           for col in range(9):
               if self.board.cells[row][col] is None:
                   for num in self.board.candidates[row][col]:
-                      if self.validator.checkPlacement(self.board, num, row, col):
+                      if self.board.check_placement(num, row, col):
                           self.board.cells[row][col] = num
                           self.board.update_candidates()  # Update candidates after placing a number
  

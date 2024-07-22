@@ -1,19 +1,28 @@
 class Validator:
 
   def __init__(self):
-    pass
+    self
   
-  def checkPlacement(self, board, num, row, col):
+ 
+  def is_solved(self, cells):
+    if any(value is None for row in cells for value in row):
+      return True
+    else:
+      return False
+
+ 
+  def check_placement(self, num, row_nums, col_nums, box_nums):
       """Check if placing num at board[row][col] is valid."""
-      if num in board.get_row_numbers(row):
+      if num in row_nums:
           return False
-      if num in board.get_col_numbers(col):
+      if num in col_nums:
           return False
-      if num in board.get_box_numbers(row, col):
+      if num in box_nums:
           return False
       return True
 
-  def validate(self, board):
+
+  def validate(self, cells):
     """Checks if the current board state is a valid Sudoku."""
 
     def is_valid_group(group):
@@ -22,20 +31,20 @@ class Validator:
       return len(values) == len(set(values))
 
     # Check rows
-    for row in board:
+    for row in cells:
       if not is_valid_group(row):
         return False
 
     # Check columns
     for col in range(9):
-      if not is_valid_group([board[row][col] for row in range(9)]):
+      if not is_valid_group([cells[row][col] for row in range(9)]):
         return False
 
     # Check 3x3 boxes
     for box_row in range(0, 9, 3):
       for box_col in range(0, 9, 3):
         box_values = [
-            board[box_row + r][box_col + c] for r in range(3) for c in range(3)
+            cells[box_row + r][box_col + c] for r in range(3) for c in range(3)
         ]
         if not is_valid_group(box_values):
           return False

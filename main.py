@@ -1,6 +1,6 @@
 # main.py
 from sudoku import Sudoku
-from board import Board 
+from board.board import Board 
 from solvers.solver_factory import SolverFactory
 from solvers.backtracking_solver import BacktrackingSolver
 
@@ -11,6 +11,7 @@ def main():
     board = Board(board_string)
     # Create the Solver
     solver  = SolverFactory().create_solver(solverType="Backtracking")
+    # solver  = SolverFactory().create_solver(solverType="Strategic")
     # Create Sudoku Game
     sudoku = Sudoku(board, solver)
     # Solve The Sudoku 

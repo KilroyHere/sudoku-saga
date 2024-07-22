@@ -1,4 +1,5 @@
-from utilities.colors import Colors
+from board.colors import Colors
+from board.validator import Validator
 import copy
 
 class Board:
@@ -8,8 +9,10 @@ class Board:
     self.original = copy.deepcopy(self.cells)
     self.candidates = self.initialize_candidates()
     self.colors = Colors()
+    self.validator = Validator()
 
     self.update_candidates()
+    assert self.validator.validate(self.cells), "Illegal Numbers Input"
 
   def string_to_board(self, board_string):
     """Converts a string representation of a Sudoku board to a 2D list."""
@@ -43,8 +46,16 @@ class Board:
           self.candidates[row][col] = possible_numbers
         else:
           self.candidates[row][col] = set()
-          
-
+         
+  # Validator Functions
+  def check_placement(self, num, row, col):
+    row_nums = self.get_row_numbers(row)
+    col_nums = self.get_col_numbers(col)
+    box_nums = self.get_box_numbers(row,col)
+    return self.validator.check_placement(num, row_nums, col_nums, box_nums)
+ 
+  def is_solved(self):
+    return self.validator.is_solved(self.cells)
   # Getter Functions ====================================================================
 
   def get_row(self,row):
