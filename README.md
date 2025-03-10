@@ -100,23 +100,6 @@ The project includes a comprehensive testing framework for:
 - Puzzle difficulty assessment
 - Solving process visualization
 
-### Running Tests
-
-1. Run all tests:
-```bash
-python -m unittest discover test
-```
-
-2. Test specific strategies:
-```bash
-python test/test_framework.py --test-strategy "X-Wing"
-```
-
-3. Generate performance report:
-```bash
-python test/test_framework.py --analyze 1000 --performance
-```
-
 
 
 ## Documentation
