@@ -62,7 +62,7 @@ python test/test_framework.py --test "puzzle_string" --verbose
 #### Strategy Analysis
 View strategy usage statistics:
 ```bash
-python test/test_framework.py --analyze 100 --stats
+python test/test_framework.py --analyze 100 
 ```
 
 
