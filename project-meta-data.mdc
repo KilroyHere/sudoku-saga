@@ -1,0 +1,44 @@
+### Project-Meta-Data Rule
+This project.md file must be maintained according to the following guidelines:
+
+1. **Update Frequency**:
+   - Update this document after implementing each new strategy
+   - Update after any significant architectural changes
+   - Update when adding new solvers or major components
+   - Update when changing interfaces between components
+   - Update immediately when explicitly requested by the user
+   - Update all metadata files (project.md, README.md, TODO.md) simultaneously when requested
+
+2. **Required Sections**:
+   - Project Overview
+   - Directory Structure (keep up-to-date with new files)
+   - Data Flow (update as the flow changes)
+   - Main Classes and Functions (add new classes with descriptions)
+   - Project Status (track completed, in-progress, and planned work)
+   - Implementation Notes (document key design decisions)
+   - Component Interfaces (document how components interact)
+   - Dependencies (track inter-module dependencies)
+
+3. **Diagrams**:
+   - Include a class relationship diagram when significant changes occur
+   - Maintain a data flow diagram showing the solving process
+   - Update the strategy hierarchy diagram when adding new strategies
+   - Consider using tools like PlantUML or Mermaid for inline diagrams
+
+4. **Component Interfaces**:
+   ```
+   Interface: StrategyInterface
+   Provided by: Strategy class
+   Used by: StrategicSolver
+   Methods:
+     - process(): Finds opportunities to apply the strategy
+   ```
+
+5. **Metadata File Synchronization**:
+   - When updating project.md, ensure consistency across all metadata files:
+     - README.md: Update installation, usage, and feature sections
+     - TODO.md: Sync project status and upcoming tasks
+     - CONTRIBUTING.md: Update development guidelines if needed
+   - Cross-reference between metadata files to maintain coherent documentation
+   - Ensure version numbers and feature lists are consistent across all files
+   - Update all metadata files when explicitly requested with "update metadata" 

@@ -1,24 +1,41 @@
 # main.py
-from sudoku import Sudoku
+from sudoku.sudoku import Sudoku
 from board.board import Board 
 from solvers.solver_factory import SolverFactory
 from solvers.backtracking_solver import BacktrackingSolver
 
 def main():
-    # Example Sudoku puzzle string
-    # This string represents one of the easiest boards
-    board_string = "300967001040302080020000070070000090000873000500010003004705100905000207800621004"
+    # This is a challenging Sudoku puzzle that requires advanced strategies
+    # beyond basic techniques like Single Candidates and Hidden Singles
+    board_string = "309000400200709000087000000750060230600904008028050041000000590000106007006000104"
+    
     # Create the Board
     board = Board(board_string)
-    # Create the Solver
-    # solver  = SolverFactory().create_solver(board, solverType="Backtracking")
-    solver = SolverFactory().create_solver(board, solverType="Strategic")
+    
+    # Create the Strategic Solver (using verbose mode to see detailed progress)
+    solver = SolverFactory().create_solver(board, solverType="Strategic", mode="Verbose")
+    
     # Create Sudoku Game
     sudoku = Sudoku(board, solver)
-    # Solve The Sudoku 
+    
+    print("Initial board:")
     sudoku.board.display_board()
-    sudoku.solve()
+    print("\nInitial candidates:")
+    sudoku.board.display_candidates()
+    
+    print("\nAttempting to solve...")
+    solved = sudoku.solve()
+    
+    print("\nFinal board:")
     sudoku.board.display_board()
+    print("\nFinal candidates:")
+    sudoku.board.display_candidates()
+    
+    if not solved:
+        print("\nNote: This puzzle requires advanced strategies not yet implemented.")
+        print("Current strategies available:")
+        for strategy in solver.strategies:
+            print(f"- {strategy.name}")
     
 if __name__ == "__main__":
     main()

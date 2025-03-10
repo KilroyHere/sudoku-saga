@@ -26,6 +26,8 @@ class SingleCandidateStrategy(Strategy):
                 if self.board.cells[row][col] is None:
                     possible_values = self.board.candidates[row][col]
                     if len(possible_values) == 1:
-                        values_to_insert.append((row, col, possible_values.pop()))
-        return values_to_insert
+                        # Get the single value without modifying the set
+                        value = next(iter(possible_values))
+                        values_to_insert.append((row, col, value))
+        return values_to_insert if values_to_insert else None
     

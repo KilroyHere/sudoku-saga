@@ -5,10 +5,13 @@ class Validator:
   
  
   def is_solved(self, cells):
+    """Check if the board is completely filled AND valid."""
+    # First check if all cells are filled
     if any(value is None for row in cells for value in row):
-      return False
-    else:
-      return True
+        return False
+    
+    # Then check if the solution is valid
+    return self.validate(cells)
 
  
   def check_placement(self, num, row_nums, col_nums, box_nums):

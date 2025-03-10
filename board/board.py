@@ -86,6 +86,10 @@ class Board:
   def is_solved(self):
     return self.validator.is_solved(self.cells)
   
+  def is_valid(self):
+    """Check if the current board state is valid."""
+    return self.validator.validate(self.cells)
+  
   
   # Getter Functions ==========================================================
 

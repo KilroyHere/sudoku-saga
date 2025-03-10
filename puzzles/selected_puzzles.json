@@ -1,0 +1,77 @@
+{
+  "test_cases": [
+    {
+      "id": 3610,
+      "puzzle": "068700900004000071030809050300080100040005007007304092602001005000020600059030028",
+      "solution": "568712943924653871731849256395287164246195387817364592682971435473528619159436728",
+      "strategy_sequence": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Naked Pairs Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "unique_strategies": [
+        "Single Candidate Strategy",
+        "Naked Pairs Strategy"
+      ]
+    },
+    {
+      "id": 8761,
+      "puzzle": "000700084895000000104960520300040107050000068280005400706200000010030000040080316",
+      "solution": "623751984895324671174968523369842157457193268281675439736219845518436792942587316",
+      "strategy_sequence": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Naked Pairs Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "unique_strategies": [
+        "Single Candidate Strategy",
+        "Naked Pairs Strategy"
+      ]
+    },
+    {
+      "id": 9179,
+      "puzzle": "090020710003000580700530000075000000000003076940018020400280001100609000089001402",
+      "solution": "594826713263197584718534269375962148821453976946718325437285691152649837689371452",
+      "strategy_sequence": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Naked Pairs Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "unique_strategies": [
+        "Single Candidate Strategy",
+        "Naked Pairs Strategy"
+      ]
+    }
+  ]
+}

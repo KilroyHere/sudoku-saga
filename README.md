@@ -1,66 +1,135 @@
-# First Pass 
-- Backtracking (TODO: Dancing Links Algorithm)
+# Sudoku Solver
 
-# Strategies TODO
-> "[Strategies Referenced.](https://www.sudokuwiki.org/Strategy_Families)"
+A comprehensive Python-based Sudoku solver implementing human-like solving strategies, from basic techniques to advanced solving methods.
+
+## Features
+
+- 🧩 Multiple solving strategies from basic to advanced
+- 🔍 Human-like solving approach
+- 📊 Detailed solving process visualization
+- 📈 Performance analysis and statistics
+- 🧪 Comprehensive testing framework
+
+### Implemented Strategies
+
+#### Basic Strategies
+- ✓ Single Candidate (Naked Singles)
+- ✓ Hidden Singles
+- ✓ Pointing Pairs
+- ✓ Box/Line Intersection
+- ✓ Naked Pairs/Triples/Quads
+- ✓ Hidden Pairs/Triples/Quads
+
+#### In Development
+- X-Wing Strategy
+- Swordfish Strategy
+
+<!-- ## Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/sudoku-solver.git
+cd sudoku-solver
+``` -->
+
+## Usage
+
+### Basic Usage
+
+1. Solve a single puzzle:
+```bash
+python test/test_framework.py --test "000921003009000060000000500080403006007000800500700040003000000020000700800195000"
+```
+
+2. Analyze multiple puzzles:
+```bash
+python test/test_framework.py --analyze 100
+```
+
+3. Test from a file:
+```bash
+python test/test_framework.py --test-file puzzles/selected_puzzles.json
+```
+
+### Advanced Usage
+
+#### Verbose Output
+Add `--verbose` for detailed solving process:
+```bash
+python test/test_framework.py --test "puzzle_string" --verbose
+```
+
+#### Strategy Analysis
+View strategy usage statistics:
+```bash
+python test/test_framework.py --analyze 100 --stats
+```
 
 
-## Basic Strategies
-- Getting Started
-- Naked Candidates
-- Hidden Candidates
-- Intersection Removal
+## Solving Strategies
 
-## Tough Strategies
+### Basic Strategies
+1. **Single Candidate (Naked Singles)**
+   - Finds cells with only one possible value
+
+2. **Hidden Singles**
+   - Identifies numbers that can only go in one cell in a unit
+
+3. **Pointing Pairs/Triples**
+   - When candidates in a box are restricted to one row/column
+
+4. **Box/Line Intersection**
+   - When candidates in a row/column are restricted to one box
+
+5. **Naked/Hidden Pairs/Triples/Quads**
+   - Groups of cells sharing the same candidates
+
+### Advanced Strategies (In Development)
 - X-Wing
-- Singles Chains
-- Y-Wing
-- Rectangle Elimination
 - Swordfish
+- Simple Coloring
+- Y-Wing
 - XYZ-Wing
-- BUG
-- Avoidable Rectangles
+- Rectangle Patterns
 
-## Diabolical Strategies
-- X-Cycles (Part 1)
-- X-Cycles (Part 2)
-- 3D Medusa
-- Jellyfish
-- Unique Rectangles
-- Fireworks
-- SK Loops
-- Extended Rectangles
-- Hidden URs
-- WXYZ-Wing
-- XY-Chains
-- Aligned Pair Exclusion
+## Testing Framework
 
-## Extreme Strategies
-- Exocet
-- Grouped X-Cycles
-- Finned X-Wing
-- Finned Swordfish
-- Inference Chains
-- AIC with Groups
-- AIC with ALSs
-- Sue-de-Coq
-- Digit Forcing Chains
-- Nishio Forcing Chains
-- Cell Forcing Chains
-- Unit Forcing Chains
-- Almost Locked Sets
-- Death Blossom
-- Pattern Overlay
+The project includes a comprehensive testing framework for:
+- Strategy validation
+- Performance analysis
+- Puzzle difficulty assessment
+- Solving process visualization
 
-# Constraint Satisfaction Problem TODO  
-- MAC
-- FC
+### Running Tests
 
-<hr>
+1. Run all tests:
+```bash
+python -m unittest discover test
+```
 
-# DONE:
-- Setup
-- Display
-- Validator
-- ANSI Coloring
-- First Pass (Naive Backtracking)
+2. Test specific strategies:
+```bash
+python test/test_framework.py --test-strategy "X-Wing"
+```
+
+3. Generate performance report:
+```bash
+python test/test_framework.py --analyze 1000 --performance
+```
+
+
+
+## Documentation
+
+- [Project Overview](project.md)
+- [Contributing Guidelines](CONTRIBUTING.md)
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- Strategy definitions from [SudokuWiki.org](https://www.sudokuwiki.org)
+- Testing puzzles from various online resources
+
