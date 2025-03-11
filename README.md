@@ -104,8 +104,7 @@ The project includes a comprehensive testing framework for:
 
 ## Documentation
 
-- [Project Overview](project.md)
-- [Contributing Guidelines](CONTRIBUTING.md)
+
 
 ## License
 
