@@ -1,94 +1,114 @@
-from typing import List, Set, Tuple
+from typing import List, Optional, Tuple, Dict, Set
 from .strategy import Strategy
 from board.board import Board
 
 class PointingPairsStrategy(Strategy):
     """
-    Pointing Pairs/Triples Strategy.
-    When a candidate appears in only 2 or 3 cells within a box, and those cells share a row or column,
-    that candidate can be eliminated from other cells in that row or column.
+    Pointing Pairs Strategy.
+    
+    This strategy identifies when a candidate in a box appears only in cells that
+    share a common row or column. When found, that candidate can be eliminated from
+    other cells in that row/column outside the box.
+    
+    The strategy works by:
+    1. Finding candidates in a box that only appear in two or three cells
+    2. Checking if these cells share the same row or column
+    3. Eliminating the candidate from other cells in that row/column outside the box
     
     Example:
-    If a candidate 5 appears only in cells (1,1) and (1,2) within box 0,
-    then 5 can be eliminated from all other cells in row 1 outside box 0.
+        If in a box, the number 4 appears as a candidate only in two cells that share
+        the same row, then:
+        - 4 must be in one of those cells in that box
+        - 4 can be eliminated from all other cells in that row outside the box
+    
+    Reference: https://www.sudokuwiki.org/Intersection_Removal#IR
     """
-    
-    def __init__(self, board: Board):
+
+    def __init__(self, board: Board) -> None:
+        """
+        Initialize the Pointing Pairs Strategy.
+        
+        Args:
+            board (Board): The Sudoku board to analyze
+        """
         super().__init__(board, name="Pointing Pairs Strategy", type="Candidate Eliminator")
-        
-    def _get_cells_with_candidate_in_box(self, box: int, candidate: int) -> List[Tuple[int, int]]:
-        """Get all cells in a box that contain a specific candidate."""
-        cells = []
-        box_row, box_col = (box // 3) * 3, (box % 3) * 3
-        
-        for i in range(3):
-            for j in range(3):
-                row, col = box_row + i, box_col + j
-                if self.board.cells[row][col] is None and candidate in self.board.candidates[row][col]:
-                    cells.append((row, col))
-        
-        return cells
     
-    def _cells_share_unit(self, cells: List[Tuple[int, int]]) -> Tuple[bool, str, int]:
-        """Check if cells share a row or column."""
-        if not cells:
-            return False, "", -1
-            
-        rows = {row for row, _ in cells}
-        cols = {col for _, col in cells}
+    def process(self) -> Optional[List[Tuple[int, int, int]]]:
+        """
+        Find pointing pairs in boxes.
         
-        if len(rows) == 1:
-            return True, "row", next(iter(rows))
-        if len(cols) == 1:
-            return True, "column", next(iter(cols))
+        Returns:
+            Optional[List[Tuple[int, int, int]]]: List of (row, col, value) tuples where
+            value is a candidate that should be eliminated from the cell at (row, col).
+            Returns None if no pointing pairs are found.
+        """
+        # Check each box (0-8)
+        for box_index in range(9):
+            # Get empty cells in this box
+            empty_cells = self._get_empty_cells_in_unit('box', box_index)
             
-        return False, "", -1
+            # Skip if less than 2 empty cells
+            if len(empty_cells) < 2:
+                continue
+            
+            # Find pointing pairs in this box
+            box_eliminations = self._find_pointing_pairs_in_box(box_index, empty_cells)
+            if box_eliminations:
+                return box_eliminations  # Return as soon as we find useful eliminations
+        
+        return None
     
-    def _eliminate_from_unit(self, unit_type: str, unit_index: int, box: int, candidate: int) -> List[Tuple[int, int, int]]:
-        """Eliminate candidate from cells in the unit (row/column) outside the box."""
+    def _find_pointing_pairs_in_box(self, box_index: int, empty_cells: List[Tuple[int, int]]) -> Optional[List[Tuple[int, int, int]]]:
+        """
+        Find pointing pairs within a given box.
+        
+        Args:
+            box_index (int): Index of the box (0-8)
+            empty_cells (List[Tuple[int, int]]): List of empty cell coordinates in the box
+            
+        Returns:
+            Optional[List[Tuple[int, int, int]]]: List of eliminations if a pointing pair is found,
+            None otherwise.
+        """
+        box_row, box_col = (box_index // 3) * 3, (box_index % 3) * 3
+        
+        # Create a map of candidates to their locations in this box
+        candidate_locations: Dict[int, List[Tuple[int, int]]] = {i: [] for i in range(1, 10)}
+        for row, col in empty_cells:
+            for candidate in self.board.candidates[row][col]:
+                candidate_locations[candidate].append((row, col))
+        
         eliminations = []
-        box_row, box_col = (box // 3) * 3, (box % 3) * 3
         
-        if unit_type == "row":
-            # Eliminate from the row outside the box
-            for col in range(9):
-                if not (box_col <= col < box_col + 3):  # If cell is not in the box
-                    if self.board.cells[unit_index][col] is None:
-                        if candidate in self.board.candidates[unit_index][col]:
-                            eliminations.append((unit_index, col, candidate))
-                            
-        elif unit_type == "column":
-            # Eliminate from the column outside the box
-            for row in range(9):
-                if not (box_row <= row < box_row + 3):  # If cell is not in the box
-                    if self.board.cells[row][unit_index] is None:
-                        if candidate in self.board.candidates[row][unit_index]:
-                            eliminations.append((row, unit_index, candidate))
-                            
-        return eliminations
-    
-    def process(self):
-        """
-        Find pointing pairs/triples in each box and eliminate candidates from corresponding rows/columns.
-        Returns a list of (row, col, candidate) tuples indicating candidates to eliminate.
-        """
-        all_eliminations = []
+        # Check each candidate that appears in 2 or 3 cells in the box
+        for candidate, locations in candidate_locations.items():
+            if len(locations) not in [2, 3]:
+                continue
+            
+            # Check if all occurrences are in the same row
+            rows = {row for row, _ in locations}
+            if len(rows) == 1:
+                row = next(iter(rows))
+                # Look for the candidate in other cells in this row
+                for col in range(9):
+                    # Skip if cell is in the current box
+                    if box_col <= col < box_col + 3:
+                        continue
+                    if (self.board.cells[row][col] is None and 
+                        candidate in self.board.candidates[row][col]):
+                        eliminations.append((row, col, candidate))
+            
+            # Check if all occurrences are in the same column
+            cols = {col for _, col in locations}
+            if len(cols) == 1:
+                col = next(iter(cols))
+                # Look for the candidate in other cells in this column
+                for row in range(9):
+                    # Skip if cell is in the current box
+                    if box_row <= row < box_row + 3:
+                        continue
+                    if (self.board.cells[row][col] is None and 
+                        candidate in self.board.candidates[row][col]):
+                        eliminations.append((row, col, candidate))
         
-        # Check each box
-        for box in range(9):
-            # Check each candidate
-            for candidate in range(1, 10):
-                # Get cells in this box that contain this candidate
-                cells = self._get_cells_with_candidate_in_box(box, candidate)
-                
-                # If we found 2 or 3 cells with this candidate
-                if len(cells) in [2, 3]:
-                    # Check if they share a row or column
-                    shares_unit, unit_type, unit_index = self._cells_share_unit(cells)
-                    
-                    if shares_unit:
-                        # Eliminate this candidate from other cells in the shared unit
-                        eliminations = self._eliminate_from_unit(unit_type, unit_index, box, candidate)
-                        all_eliminations.extend(eliminations)
-        
-        return all_eliminations if all_eliminations else None 
+        return eliminations if eliminations else None 

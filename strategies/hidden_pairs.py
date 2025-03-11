@@ -1,5 +1,7 @@
-from strategies.strategy import Strategy
+from typing import List, Optional, Tuple, Dict, Set, FrozenSet
 from itertools import combinations
+from board.board import Board
+from strategies.strategy import Strategy
 
 '''
 This strategy identifies hidden pairs in a unit (row, column, or box).
@@ -16,17 +18,45 @@ Reference: https://www.sudokuwiki.org/Hidden_Candidates#HP
 '''
 
 class HiddenPairsStrategy(Strategy):
-    def __init__(self, board):
+    """
+    Hidden Pairs Strategy.
+    
+    This strategy identifies two candidates that appear only in the same two cells
+    within a unit (row, column, or box), even though those cells may contain other
+    candidates. When found, all other candidates can be eliminated from those two cells.
+    
+    The strategy works by:
+    1. Finding pairs of candidates that appear only in two cells within a unit
+    2. Identifying the cells containing these candidates
+    3. Eliminating all other candidates from those cells
+    
+    Example:
+        If in a row, numbers 2,7 appear only in cells A,B (even though these cells
+        have other candidates like [2,4,7,9] and [2,5,7,8]), then:
+        - Cells A,B must contain 2,7
+        - All other candidates (4,5,8,9) can be eliminated from these cells
+    
+    Reference: https://www.sudokuwiki.org/Hidden_Candidates#HP
+    """
+
+    def __init__(self, board: Board) -> None:
+        """
+        Initialize the Hidden Pairs Strategy.
+        
+        Args:
+            board (Board): The Sudoku board to analyze
+        """
         super().__init__(board, name="Hidden Pairs Strategy", type="Candidate Eliminator")
     
-    def process(self):
+    def process(self) -> Optional[List[Tuple[int, int, int]]]:
         """
         Find hidden pairs in rows, columns, and boxes.
-        A hidden pair is when two candidates appear in only two cells within a unit.
-        We can then eliminate all other candidates from these cells.
-        """
-        eliminations = []
         
+        Returns:
+            Optional[List[Tuple[int, int, int]]]: List of (row, col, value) tuples where
+            value is a candidate that should be eliminated from the cell at (row, col).
+            Returns None if no hidden pairs are found.
+        """
         # Check each unit type (row, column, box)
         for unit_type in ['row', 'column', 'box']:
             # Check each unit index (0-8)
@@ -38,38 +68,56 @@ class HiddenPairsStrategy(Strategy):
                 if len(empty_cells) < 2:
                     continue
                 
-                # Create a map of candidates to cells they appear in
-                candidate_locations = {i: [] for i in range(1, 10)}
-                for row, col in empty_cells:
-                    for candidate in self.board.candidates[row][col]:
-                        candidate_locations[candidate].append((row, col))
-                
-                # Find candidates that appear in exactly 2 cells
-                pairs = []
-                for candidate, locations in candidate_locations.items():
-                    if len(locations) == 2:
-                        pairs.append((candidate, frozenset(locations)))
-                
-                # Check all possible combinations of two candidates
-                for (cand1, locs1), (cand2, locs2) in combinations(pairs, 2):
-                    # If both candidates appear in the same two cells
-                    if locs1 == locs2:
-                        # Get the two cells
-                        cells = list(locs1)
-                        pair = {cand1, cand2}
-                        
-                        # Remove all other candidates from these cells
-                        found_elimination = False
-                        for row, col in cells:
-                            for candidate in list(self.board.candidates[row][col]):
-                                if candidate not in pair:
-                                    eliminations.append((row, col, candidate))
-                                    found_elimination = True
-                        
-                        if found_elimination:
-                            return eliminations  # Return as soon as we find a useful pair
+                # Find hidden pairs in this unit
+                unit_eliminations = self._find_hidden_pairs_in_unit(empty_cells)
+                if unit_eliminations:
+                    return unit_eliminations  # Return as soon as we find a useful pair
         
-        return None if not eliminations else eliminations
+        return None
+    
+    def _find_hidden_pairs_in_unit(self, empty_cells: List[Tuple[int, int]]) -> Optional[List[Tuple[int, int, int]]]:
+        """
+        Find hidden pairs within a given unit's empty cells.
+        
+        Args:
+            empty_cells (List[Tuple[int, int]]): List of empty cell coordinates in the unit
+            
+        Returns:
+            Optional[List[Tuple[int, int, int]]]: List of eliminations if a hidden pair is found,
+            None otherwise.
+        """
+        # Create a map of candidates to cells they appear in
+        candidate_locations: Dict[int, List[Tuple[int, int]]] = {i: [] for i in range(1, 10)}
+        for row, col in empty_cells:
+            for candidate in self.board.candidates[row][col]:
+                candidate_locations[candidate].append((row, col))
+        
+        # Find candidates that appear in 2 cells
+        potential_candidates = [
+            (candidate, frozenset(locations))
+            for candidate, locations in candidate_locations.items()
+            if len(locations) == 2
+        ]
+        
+        # Check all possible combinations of two candidates
+        for (cand1, locs1), (cand2, locs2) in combinations(potential_candidates, 2):
+            # If these candidates appear in the same two cells
+            if locs1 == locs2:
+                # Get the two cells
+                cells = list(locs1)
+                pair = {cand1, cand2}
+                
+                # Try to eliminate other candidates from these cells
+                eliminations = []
+                for row, col in cells:
+                    for candidate in list(self.board.candidates[row][col]):
+                        if candidate not in pair:
+                            eliminations.append((row, col, candidate))
+                
+                if eliminations:
+                    return eliminations
+        
+        return None
 
     def _get_empty_cells_in_unit(self, unit_type, index):
         """

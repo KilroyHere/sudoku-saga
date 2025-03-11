@@ -1,5 +1,7 @@
-from strategies.strategy import Strategy
+from typing import List, Optional, Tuple, Dict, Set, FrozenSet
 from itertools import combinations
+from board.board import Board
+from strategies.strategy import Strategy
 
 '''
 This strategy identifies hidden quads in a unit (row, column, or box).
@@ -16,14 +18,43 @@ Reference: https://www.sudokuwiki.org/Hidden_Candidates#HQ
 '''
 
 class HiddenQuadsStrategy(Strategy):
-    def __init__(self, board):
+    """
+    Hidden Quads Strategy.
+    
+    This strategy identifies four candidates that appear in exactly four cells within
+    a unit (row, column, or box), even though those cells may contain other candidates.
+    When found, all other candidates can be eliminated from those four cells.
+    
+    The strategy works by:
+    1. Finding four candidates that appear only in four cells within a unit
+    2. Eliminating all other candidates from those four cells
+    
+    Example:
+        If in a row, numbers 1,2,3,4 only appear in cells A,B,C,D (which may have
+        other candidates), then:
+        - Cells A,B,C,D must contain 1,2,3,4
+        - All other candidates can be eliminated from these cells
+    
+    Reference: https://www.sudokuwiki.org/Hidden_Candidates#HQ
+    """
+
+    def __init__(self, board: Board) -> None:
+        """
+        Initialize the Hidden Quads Strategy.
+        
+        Args:
+            board (Board): The Sudoku board to analyze
+        """
         super().__init__(board, name="Hidden Quads Strategy", type="Candidate Eliminator")
     
-    def process(self):
+    def process(self) -> Optional[List[Tuple[int, int, int]]]:
         """
         Find hidden quads in rows, columns, and boxes.
-        A hidden quad is when four candidates appear in only four cells within a unit.
-        We can then eliminate all other candidates from these cells.
+        
+        Returns:
+            Optional[List[Tuple[int, int, int]]]: List of (row, col, value) tuples where
+            value is a candidate that should be eliminated from the cell at (row, col).
+            Returns None if no hidden quads are found.
         """
         eliminations = []
         
@@ -38,42 +69,61 @@ class HiddenQuadsStrategy(Strategy):
                 if len(empty_cells) < 4:
                     continue
                 
-                # Create a map of candidates to cells they appear in
-                candidate_locations = {i: [] for i in range(1, 10)}
-                for row, col in empty_cells:
-                    for candidate in self.board.candidates[row][col]:
-                        candidate_locations[candidate].append((row, col))
-                
-                # Find candidates that appear in 2, 3, or 4 cells
-                potential_candidates = []
-                for candidate, locations in candidate_locations.items():
-                    if 2 <= len(locations) <= 4:
-                        potential_candidates.append((candidate, frozenset(locations)))
-                
-                # Check all possible combinations of four candidates
-                for cands in combinations(potential_candidates, 4):
-                    # Get all cells where these candidates appear
-                    all_cells = set()
-                    for _, locs in cands:
-                        all_cells.update(locs)
-                    
-                    # If these candidates appear in exactly four cells
-                    if len(all_cells) == 4:
-                        # Get the four candidates
-                        quad = {cand for cand, _ in cands}
-                        
-                        # Remove all other candidates from these cells
-                        found_elimination = False
-                        for row, col in all_cells:
-                            for candidate in list(self.board.candidates[row][col]):
-                                if candidate not in quad:
-                                    eliminations.append((row, col, candidate))
-                                    found_elimination = True
-                        
-                        if found_elimination:
-                            return eliminations  # Return as soon as we find a useful quad
+                # Find hidden quads in this unit
+                unit_eliminations = self._find_hidden_quads_in_unit(empty_cells)
+                if unit_eliminations:
+                    eliminations.extend(unit_eliminations)
+                    return eliminations  # Return as soon as we find a useful quad
         
-        return None if not eliminations else eliminations
+        return eliminations if eliminations else None
+    
+    def _find_hidden_quads_in_unit(self, empty_cells: List[Tuple[int, int]]) -> Optional[List[Tuple[int, int, int]]]:
+        """
+        Find hidden quads within a given unit's empty cells.
+        
+        Args:
+            empty_cells (List[Tuple[int, int]]): List of empty cell coordinates in the unit
+            
+        Returns:
+            Optional[List[Tuple[int, int, int]]]: List of eliminations if a hidden quad is found,
+            None otherwise.
+        """
+        # Create a map of candidates to cells they appear in
+        candidate_locations: Dict[int, List[Tuple[int, int]]] = {i: [] for i in range(1, 10)}
+        for row, col in empty_cells:
+            for candidate in self.board.candidates[row][col]:
+                candidate_locations[candidate].append((row, col))
+        
+        # Find candidates that appear in 2, 3, or 4 cells
+        potential_candidates = [
+            (candidate, frozenset(locations))
+            for candidate, locations in candidate_locations.items()
+            if 2 <= len(locations) <= 4
+        ]
+        
+        # Check all possible combinations of four candidates
+        for cands in combinations(potential_candidates, 4):
+            # Get all cells where these candidates appear
+            all_cells = set().union(*(locs for _, locs in cands))
+            
+            # If these candidates appear in exactly four cells
+            if len(all_cells) == 4:
+                # Get the four candidates
+                quad = {cand for cand, _ in cands}
+                
+                # Remove all other candidates from these cells
+                eliminations = []
+                found_elimination = False
+                for row, col in all_cells:
+                    for candidate in list(self.board.candidates[row][col]):
+                        if candidate not in quad:
+                            eliminations.append((row, col, candidate))
+                            found_elimination = True
+                
+                if found_elimination:
+                    return eliminations
+        
+        return None
 
     def _get_empty_cells_in_unit(self, unit_type, index):
         """

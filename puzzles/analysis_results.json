@@ -1,12 +1,12 @@
 {
   "summary": {
-    "total_puzzles": 5,
-    "puzzles_solved": 5,
+    "total_puzzles": 100,
+    "puzzles_solved": 100,
     "strategy_counts": {
-      "Single Candidate Strategy": 26
+      "Single Candidate Strategy": 512
     },
     "strategy_combinations": {
-      "Single Candidate Strategy": 5
+      "Single Candidate Strategy": 100
     }
   },
   "results": [
@@ -67,6 +67,1252 @@
       "solution": "465912378189473562327568149738645291954821637216397854573284916642159783891736425",
       "strategies_used": [
         "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 5,
+      "puzzle": "100005007380900000600000480820001075040760020069002001005039004000020100000046352",
+      "solution": "194685237382974516657213489823491675541768923769352841215839764436527198978146352",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 6,
+      "puzzle": "009065430007000800600108020003090002501403960804000100030509007056080000070240090",
+      "solution": "289765431317924856645138729763891542521473968894652173432519687956387214178246395",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 7,
+      "puzzle": "000000657702400100350006000500020009210300500047109008008760090900502030030018206",
+      "solution": "894231657762495183351876942583624719219387564647159328128763495976542831435918276",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 8,
+      "puzzle": "503070190000006750047190600400038000950200300000010072000804001300001860086720005",
+      "solution": "563472198219386754847195623472638519951247386638519472795864231324951867186723945",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 9,
+      "puzzle": "060720908084003001700100065900008000071060000002010034000200706030049800215000090",
+      "solution": "163725948584693271729184365946358127371462589852917634498231756637549812215876493",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 10,
+      "puzzle": "004083002051004300000096710120800006040000500830607900060309040007000205090050803",
+      "solution": "974183652651274389283596714129835476746912538835647921568329147317468295492751863",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 11,
+      "puzzle": "000060280709001000860320074900040510007190340003006002002970000300800905500000021",
+      "solution": "431567289729481653865329174986243517257198346143756892612975438374812965598634721",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 12,
+      "puzzle": "004300000890200670700900050500008140070032060600001308001750900005040012980006005",
+      "solution": "254367891893215674716984253532698147178432569649571328421753986365849712987126435",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 13,
+      "puzzle": "008070100120090054000003020604010089530780010009062300080040607007506000400800002",
+      "solution": "958274163123698754746153928674315289532789416819462375285941637397526841461837592",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 14,
+      "puzzle": "065370002000001370000640800097004028080090001100020940040006700070018050230900060",
+      "solution": "865379412924581376713642895397164528482795631156823947541236789679418253238957164",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 15,
+      "puzzle": "005710329000362800004000000100000980083900250006003100300106000409800007070029500",
+      "solution": "865714329917362845234598761142657983783941256596283174358176492429835617671429538",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 16,
+      "puzzle": "200005300000073850000108904070009001651000040040200080300050000580760100410030096",
+      "solution": "268495317194673852735128964872549631651387249943216785326951478589764123417832596",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 17,
+      "puzzle": "040800500080760092001005470056309000009001004320500010000200700700090030005008026",
+      "solution": "947812563583764192261935478156349287879621354324587619698253741712496835435178926",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 18,
+      "puzzle": "050083017000100400304005608000030009090824500006000070009000050007290086103607204",
+      "solution": "652483917978162435314975628825736149791824563436519872269348751547291386183657294",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 19,
+      "puzzle": "700084005300701020080260401624109038803600010000000002900000000001005790035400006",
+      "solution": "712984365346751829589263471624179538853642917197538642978316254461825793235497186",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 20,
+      "puzzle": "067050010084309000003080040090000205000621790700093600300400000020007153500800076",
+      "solution": "967254318184379562253186947691748235835621794742593681376415829428967153519832476",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 21,
+      "puzzle": "001409030000306052007008190060020800000003065894507000403091080079040026000700900",
+      "solution": "251479638948316752637258194365124879712983465894567213423691587179845326586732941",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 22,
+      "puzzle": "206030000001065070047108050500000029008019406000420001000042800609300005070000013",
+      "solution": "256734198891265374347198652514683729728519436963427581135942867689371245472856913",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 23,
+      "puzzle": "004502178100090030000800004600450000070900012801203500400000009350060807090300620",
+      "solution": "964532178187694235235817964629451783573986412841273596416728359352169847798345621",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 24,
+      "puzzle": "140060800085010040907400250030070400209000307008900060000740010601305090700002600",
+      "solution": "142569873385217946967438251536871429219654387478923165893746512621385794754192638",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 25,
+      "puzzle": "590000147000900008072000030700040290020030806800170050005764009036005000100800002",
+      "solution": "598326147314957628672481935753648291421539876869172453285764319936215784147893562",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 26,
+      "puzzle": "100000090208970605000532000006050400700806002083700010604080120890600050015040007",
+      "solution": "157468293238971645469532781926153478741896532583724916674385129892617354315249867",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 27,
+      "puzzle": "900084060604005207030070080760001500053000001000409603105026090002040000800003710",
+      "solution": "927384165684915237531672489769231548453768921218459673175826394392147856846593712",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 28,
+      "puzzle": "308056007006900253012040000000000320904800000760109805000001904831000506040007030",
+      "solution": "398256417476918253512743698185674329924835761763129845257361984831492576649587132",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 29,
+      "puzzle": "170300009008040600000060030600800001924600300300902500010200040709503016005007800",
+      "solution": "176328459538149672492765138657834921924651387381972564813296745749583216265417893",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 30,
+      "puzzle": "004030021070005009380690000030000000602100450010907003000846700560001240008250030",
+      "solution": "954738621276415389381692574837564912692183457415927863123846795569371248748259136",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 31,
+      "puzzle": "083200096200030704007915000402390008010004060069870000000400007500060280070050900",
+      "solution": "183247596295638714647915832452396178718524369369871425921483657534769281876152943",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 32,
+      "puzzle": "803000270409008000700024096000006915001802000030750000054000060608100003372009140",
+      "solution": "863915274429678351715324896287436915541892637936751482154283769698147523372569148",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 33,
+      "puzzle": "070490103003070590050000000000000061100749020024306008600980700012600000480007052",
+      "solution": "276495183843271596951863247397528461168749325524316978635982714712654839489137652",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 34,
+      "puzzle": "830040096020010008904700030409002065308001070000603800507030020000506400002080100",
+      "solution": "831245796726319548954768231419872365368451972275693814587134629193526487642987153",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 35,
+      "puzzle": "060250000792006100000081600009000500410009780207300004000763010300540290800000040",
+      "solution": "168257439792436158543981672639874521415629783287315964924763815371548296856192347",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 36,
+      "puzzle": "050400680090100000008059302007203000000600208604080005036004190100007000072800050",
+      "solution": "751432689293168574468759312587243961319675248624981735836524197145397826972816453",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 37,
+      "puzzle": "010092047000700609600040100003000000720008900840105070106400280480030000900017005",
+      "solution": "318692547254781639697543128563974812721368954849125376176459283485236791932817465",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 38,
+      "puzzle": "078010609203009008410060052720106030000400700091305000932000400005720010000008006",
+      "solution": "578213649263549178419867352724196835356482791891375264932651487685724913147938526",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 39,
+      "puzzle": "056010000280030040040090765790003008005760000000004001100600203020001400060805900",
+      "solution": "956417832287536149341298765794153628815762394632984571178649253529371486463825917",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 40,
+      "puzzle": "000001847010000000059348006300020004076100500200006790040207069007800415003590000",
+      "solution": "632951847814672953759348126391725684476189532285436791548217369927863415163594278",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 41,
+      "puzzle": "205040003001009000046001587004607090802000056090020340170008200000500800500903001",
+      "solution": "285746913731859624946231587354687192812394756697125348179468235463512879528973461",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 42,
+      "puzzle": "103800000906400072000205090090070050084901300002506000210004005308700401070080600",
+      "solution": "123897546956413872847265193691378254584921367732546918219634785368759421475182639",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 43,
+      "puzzle": "850420370003000010000170009000500602029304000010000438046090805005000900702840003",
+      "solution": "851429376973658214264173589438517692629384751517962438346791825185236947792845163",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 44,
+      "puzzle": "061490020280007050003108007600704031000250074090600000000010008570000206800906000",
+      "solution": "761495823284367159953128467625784931138259674497631582346512798579843216812976345",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 45,
+      "puzzle": "608900050000320190010000300400073600570260000003105020080000064020090507047008001",
+      "solution": "638917452754326198219584376492873615571269843863145729185732964326491587947658231",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 46,
+      "puzzle": "000700900004300527010006084800094053040001200962080070100869000700020130059000000",
+      "solution": "538742916694318527217956384871294653345671298962583471123869745786425139459137862",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 47,
+      "puzzle": "680905000003000508402108703390720800000000010045006900060804002001002075700013000",
+      "solution": "687935241913247568452168793396721854278459316145386927569874132831692475724513689",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 48,
+      "puzzle": "600837001089004700102000400000450020030609005040000860908006070700098010005100930",
+      "solution": "654837291389214756172965483896451327237689145541723869918346572723598614465172938",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 49,
+      "puzzle": "000067430800009150500003009007000010001806304940350020009010502608200700400708000",
+      "solution": "192567438873429156564183279387942615251876394946351827739614582618295743425738961",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 50,
+      "puzzle": "063700401400000000700091300092076030004500260035000100509040820087010609000003000",
+      "solution": "963752481451368972728491356892176534174539268635824197519647823387215649246983715",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 51,
+      "puzzle": "000340002006082073700100450082005014000098300670000005140700000905030020030000806",
+      "solution": "851347692496582173723169458382675914514298367679413285148726539965834721237951846",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 52,
+      "puzzle": "008070600960001405402000010200830090600790103007004026500900307030020500000310089",
+      "solution": "158479632963281475472563918215836794684792153397154826521948367839627541746315289",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 53,
+      "puzzle": "087200490060891000005000002400300500019002803000706200030050600500060017071403050",
+      "solution": "187235496264891735395674182426389571719542863853716249938157624542968317671423958",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 54,
+      "puzzle": "107008000650100000300060072060030250480009700001407009000000800003980015040203060",
+      "solution": "127398546654172398398564172769831254482659731531427689916745823273986415845213967",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 55,
+      "puzzle": "000704010803620907016090000000100406598400002000030079034075000100900360250300040",
+      "solution": "925784613843621957716593824372159486598467132461238579634875291187942365259316748",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 56,
+      "puzzle": "500038701026004850300072940054100300890400000000060000003000069000721400401390000",
+      "solution": "549638721726914853318572946654187392892453617137269584273845169965721438481396275",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 57,
+      "puzzle": "600050000073008020854027000201700530400069007080000900027301084060540009300000001",
+      "solution": "612453798973618425854927163291784536435269817786135942527391684168542379349876251",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 58,
+      "puzzle": "000900406701040002009501378012300009300004080085000230050007000093008600020600541",
+      "solution": "538972416761843952249561378412385769376294185985716234654127893193458627827639541",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 59,
+      "puzzle": "007500904000082305001600002800036070016004200430190050540008000029071030000000609",
+      "solution": "287513964964782315351649782895236471716854293432197856543968127629471538178325649",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 60,
+      "puzzle": "001040730630900004075000200000000501069001000004002079980500602710609300000203080",
+      "solution": "291845736638927154475136298327498561869751423154362879983574612712689345546213987",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 61,
+      "puzzle": "507108002000043100900500006070050004100002069600700380320490000001006400009070528",
+      "solution": "537168942286943157914527836873659214145832769692714385328495671751286493469371528",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 62,
+      "puzzle": "807000000610005430400690000002800709003007820900051046000009670054000000200403018",
+      "solution": "827314965619785432435692187142836759563947821978251346381529674754168293296473518",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 63,
+      "puzzle": "040000200710930000058020760300060000406800920020705800031070090007058601500100007",
+      "solution": "643587219712936458958421763385269174476813925129745836831674592297358641564192387",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 64,
+      "puzzle": "002834700010060005798200400903050100000009007080072060600081024051000300040000090",
+      "solution": "562834719314967285798215436973658142126349857485172963639781524251496378847523691",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 65,
+      "puzzle": "431800006000300010000006205609134070020000040000570089003659020500080104807000003",
+      "solution": "431825796256397418978416235689134572725968341314572689143659827592783164867241953",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 66,
+      "puzzle": "020000106610239040050004007003520009009400080800701400795006002200180000400000653",
+      "solution": "324857196617239548958614327143528769579463281862791435795346812236185974481972653",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 67,
+      "puzzle": "003000150620700009051000007180670003509003400030080201000207904000098620004510008",
+      "solution": "743869152628751349951342867182674593579123486436985271865237914317498625294516738",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 68,
+      "puzzle": "400053270020600803008904010145200006000048300000001090601300450000070900780000060",
+      "solution": "416853279529617843378924615145239786967548321832761594691382457254176938783495162",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 69,
+      "puzzle": "004030009520001300019860200402000700037006800608510020900080070073002046000000130",
+      "solution": "784235619526971384319864257452398761137426895698517423941683572873152946265749138",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 70,
+      "puzzle": "023000061000068007000304058058006120007090080140000509000430000064085930001072000",
+      "solution": "823957461415268397679314258958746123237591684146823579582439716764185932391672845",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 71,
+      "puzzle": "031020060005074003006800020700406038000095706200780901098140000500000890300000002",
+      "solution": "831529467925674183476831529759416238183295746264783951698142375512367894347958612",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 72,
+      "puzzle": "015040002020560098300010007200000600940001000030680704458000000090872050600430900",
+      "solution": "815947362724563198369218547287354619946721835531689724458196273193872456672435981",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 73,
+      "puzzle": "604302001780006300900510400003004078028000096000601004090057800000020015000403700",
+      "solution": "654372981781946352932518467163294578428735196579681234296157843347829615815463729",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 74,
+      "puzzle": "000048010943050700008200006050000379002400080070013040600590002109087500530060000",
+      "solution": "265748913943651728718239456451826379392475681876913245687594132129387564534162897",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 75,
+      "puzzle": "900003050246050700070680100000008039501200800700006001809420006002010078030000240",
+      "solution": "918743652246951783375682194624178539591234867783596421859427316462315978137869245",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 76,
+      "puzzle": "002078000006015908905000100400709500030054070000061204000020306008000009710800450",
+      "solution": "142978635376415928985632147421789563639254871857361294594127386268543719713896452",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 77,
+      "puzzle": "043020000050180070890506100400009706031000059000871000070005460002043501000600320",
+      "solution": "143927685256184973897536142428359716731462859965871234379215468682743591514698327",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 78,
+      "puzzle": "206597403080103000507000009000004210028006500409010060700305000001200000300480902",
+      "solution": "216597483984123756537648129673954218128736594459812367792365841841279635365481972",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 79,
+      "puzzle": "270600050000070406006059030040005600081000040029006173390000002000097800807140005",
+      "solution": "278634951935271486416859237743915628681723549529486173394568712152397864867142395",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 80,
+      "puzzle": "010907030002100004958002000600030002073060580000705069080000406304000105009210800",
+      "solution": "416957238732186954958342617695831742273469581841725369187593426324678195569214873",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 81,
+      "puzzle": "290041000470302050000060208039400005100000070504100603613200704000003080005900100",
+      "solution": "298541367476382951351769248739426815162835479584197623613258794947613582825974136",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 82,
+      "puzzle": "080623090400007000900000713006910400805000026014500007030708000500000009021460085",
+      "solution": "187623594453197862962845713376912458895374126214586937639758241548231679721469385",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 83,
+      "puzzle": "000050007050004020020160430941000000008746000000300508400000209705080300219030076",
+      "solution": "194253687356874921827169435941528763538746192672391548483617259765982314219435876",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 84,
+      "puzzle": "000457602940061300070000080100509400700086930020003007400010059006000800218300700",
+      "solution": "381457692942861375675932184163579428754286931829143567437618259596724813218395746",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 85,
+      "puzzle": "000720041003051890070000000730200160004109305205080009800000006090007200560904003",
+      "solution": "958723641423651897176498532739245168684179325215386479847532916391867254562914783",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 86,
+      "puzzle": "000230050673400800005007900310780000064009200082546009008000103000801700000600405",
+      "solution": "941238657673495821825167934319782546564319278782546319258974163436851792197623485",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 87,
+      "puzzle": "980046025000090700700300004008023010045070008000105006014800900506000307090002600",
+      "solution": "983746125451298763762351894678423519145679238239185476314867952526914387897532641",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 88,
+      "puzzle": "200000001003060008807031940002506070409800056100000380038670500705090263000004000",
+      "solution": "294785631513469728867231945382516479479823156156947382938672514745198263621354897",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 89,
+      "puzzle": "004206050070000306000075120002608710890000040047090000000000590056002000009307208",
+      "solution": "184236957275419386963875124532648719891723645647591832728164593356982471419357268",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 90,
+      "puzzle": "090604025000500904503700100002059001010000000006008437080003600400020000700000058",
+      "solution": "197684325628531974543792186372459861814367592956218437285173649469825713731946258",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 91,
+      "puzzle": "000750600061980004400000720259006000803000010000820075090208000010060490007340058",
+      "solution": "932754681761982534485631729259176843873495216146823975594218367318567492627349158",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 92,
+      "puzzle": "600000045200009803089007000001402309790300050000050080076030400520000700004086012",
+      "solution": "617823945245619873389547621851472369792368154463951287176235498528194736934786512",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 93,
+      "puzzle": "020980040030047601019006080700490000800023907000605000904800006001000300350014020",
+      "solution": "627981543538247691419356782763498215845123967192675438974832156281569374356714829",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 94,
+      "puzzle": "008060700030870012000205930000700504905004000802903070106000080009120360700000250",
+      "solution": "298361745534879612617245938361782594975614823842953176126537489459128367783496251",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 95,
+      "puzzle": "600300000502809070013050002700240085004007126009508000305000400170400003008090607",
+      "solution": "687321549542869371913754862731246985854937126269518734395672418176485293428193657",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 96,
+      "puzzle": "610030004005008703040906020009200400000403680002015070700001500003680200090070031",
+      "solution": "618732954925148763347956128839267415571493682462815379784321596153689247296574831",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 97,
+      "puzzle": "002080500058370100700006039005902700000000264030410000087201605901040080000090020",
+      "solution": "392184576658379142714526839845962713179853264236417958487231695921645387563798421",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 98,
+      "puzzle": "006037508700010900130050020002908000050020430600000090200005704003100060498600000",
+      "solution": "926437518785216943134859627342968175859721436617543892261395784573184269498672351",
+      "strategies_used": [
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy",
+        "Single Candidate Strategy"
+      ],
+      "solved": true
+    },
+    {
+      "id": 99,
+      "puzzle": "040038500905000000000010460001650043000700901082300050830100074276000090000960002",
+      "solution": "647238519915476238328519467791652843563784921482391756839125674276843195154967382",
+      "strategies_used": [
         "Single Candidate Strategy",
         "Single Candidate Strategy",
         "Single Candidate Strategy",
