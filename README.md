@@ -1,6 +1,6 @@
-# Sudoku Solver
+# Sudoku Saga
 
-A comprehensive Python-based Sudoku solver implementing human-like solving strategies, from basic techniques to advanced solving methods. The solver now features a centralized logging system with both verbose and non-verbose output modes.
+A comprehensive Python-based Sudoku solver implementing human-like solving strategies, from basic techniques to advanced solving methods. The solver features a centralized logging system with both verbose and non-verbose output modes, and now includes an interactive GUI visualization for step-by-step solving.
 
 ## Features
 
@@ -11,6 +11,7 @@ A comprehensive Python-based Sudoku solver implementing human-like solving strat
 - 🧪 Comprehensive testing framework
 - 🔄 Centralized logging system with verbosity control
 - 🖥️ User-friendly command-line interface
+- 🎮 Interactive GUI visualization with step-by-step playback
 
 ### Implemented Strategies
 
@@ -51,11 +52,41 @@ python main.py -v
 python main.py -p "puzzle_string" -d "My difficult puzzle"
 ```
 
+### GUI Visualization
+
+1. Launch the GUI visualization with default puzzle:
+```bash
+python run_gui.py
+```
+
+2. Visualize a specific puzzle:
+```bash
+python run_gui.py -p "puzzle_string" -d "My puzzle"
+```
+
+3. Use a specific solver type:
+```bash
+python run_gui.py -s "Strategic" -p "puzzle_string"
+```
+
+#### GUI Controls
+- **Previous/Next Buttons**: Navigate through solving steps
+- **Auto Play Button**: Toggle automatic playback
+- **Speed +/- Buttons**: Adjust auto-play speed
+- **Left/Right Arrow Keys**: Navigate through steps
+- **Space Bar**: Toggle auto-play mode
+
 ### Command-line Arguments
 
+#### Main Solver
 - `-v, --verbose`: Enable verbose output with detailed solving steps
 - `-p, --puzzle`: Specify a Sudoku puzzle string (81 characters, use 0 or . for empty cells)
 - `-d, --description`: Provide a description for the puzzle
+
+#### GUI Visualization
+- `-p, --puzzle`: Specify a Sudoku puzzle string
+- `-d, --description`: Provide a description for the puzzle
+- `-s, --solver`: Specify solver type ("Strategic" or "Backtracking")
 
 ### Output Modes
 
@@ -69,6 +100,13 @@ python main.py -p "puzzle_string" -d "My difficult puzzle"
 - Displays board state after each strategy application
 - Shows candidate eliminations and value insertions
 - Provides comprehensive solving statistics
+
+#### GUI Mode
+- Interactive visualization of the solving process
+- Step-by-step navigation through solving strategies
+- Visual highlighting of affected cells
+- Display of candidates for each cell
+- Auto-play feature with adjustable speed
 
 ### Advanced Usage
 
@@ -115,6 +153,26 @@ The project includes a comprehensive testing framework for:
 - Performance analysis
 - Puzzle difficulty assessment
 - Solving process visualization
+
+## GUI Visualization
+
+The GUI visualization provides an educational tool for understanding how different Sudoku solving strategies work:
+
+- **Interactive Controls**: Navigate through each step of the solving process
+- **Board Visualization**: See the Sudoku board at each step
+- **Candidate Visualization**: See the candidates for each cell at each step
+- **Strategy Information**: See which strategy was applied at each step
+- **Update Highlighting**: Cells affected by each strategy are highlighted
+- **Auto-Play Mode**: Watch the solving process automatically with adjustable speed
+
+### Requirements
+- Python 3.6+
+- pygame 2.5.2+
+
+Install the required packages:
+```bash
+pip install -r requirements.txt
+```
 
 ## Documentation
 

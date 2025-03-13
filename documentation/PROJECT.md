@@ -1,7 +1,7 @@
-# Sudoku Solver Project
+# Sudoku Saga
 
 ## Project Overview
-A Python-based Sudoku solver implementing various solving techniques from basic to advanced strategies. The project follows a structured approach using both backtracking and strategic methods, with a comprehensive set of solving strategies organized by complexity level. The solver now features a centralized logging system for better output control and improved user experience.
+A Python-based Sudoku solver implementing various solving techniques from basic to advanced strategies. The project follows a structured approach using both backtracking and strategic methods, with a comprehensive set of solving strategies organized by complexity level. The solver features a centralized logging system for better output control and improved user experience, and now includes an interactive GUI visualization for step-by-step solving process observation.
 
 ## Directory Structure
 ```
@@ -10,6 +10,11 @@ sudoku/
 │   ├── board.py        # Main Board class implementation
 │   ├── validator.py    # Validates Sudoku board state
 │   └── colors.py       # ANSI color handling for display
+├── display/            # GUI visualization package
+│   ├── __init__.py     # Package initialization
+│   ├── gui_display.py  # GUI visualization classes
+│   ├── gui_main.py     # Entry point for GUI visualization
+│   └── README.md       # Documentation for GUI visualization
 ├── solvers/
 │   ├── solver.py          # Base Solver class
 │   ├── solver_factory.py  # Factory for creating solver instances
@@ -34,10 +39,15 @@ sudoku/
 │   └── logger.py      # Centralized logging system
 ├── test/
 │   └── test_framework.py  # Comprehensive testing framework
-└── puzzles/
-    ├── sudoku.csv          # Database of 1M puzzles
-    ├── extract_puzzles.py  # Puzzle processing
-    └── selected_puzzles.json  # Curated test cases
+├── puzzles/
+│   ├── sudoku.csv          # Database of 1M puzzles
+│   ├── extract_puzzles.py  # Puzzle processing
+│   └── selected_puzzles.json  # Curated test cases
+├── documentation/
+│   └── PROJECT.md          # Project documentation
+├── requirements.txt        # Project dependencies
+└── run_gui.py              # Launcher script for GUI visualization
+└── main.py                 # Launcher script for CLI Version
 ```
 
 ## Data Flow
@@ -49,11 +59,12 @@ sudoku/
    - Initializes strategy hierarchy for strategic solving
 3. Logger Creation
    - Creates a logger instance based on verbosity settings
-   - Tracks the solving process and strategy applications
+   - For GUI visualization, creates a SudokuGUILogger that captures step history
 4. Strategic Solving Process
    - Strategies applied from simplest to most complex
    - Each strategy either places values or eliminates candidates
    - Process continues until solved or unsolvable
+   - For GUI visualization, each step's state is captured and stored
 5. State Machine Control
    - Manages solving process through defined states
    - Handles strategy selection and application
@@ -61,6 +72,7 @@ sudoku/
 6. Output Generation
    - Logger formats and displays the solving process
    - Provides summary of strategies used
+   - For GUI visualization, displays the solving process step by step with interactive controls
 
 ## Main Classes and Functions
 
@@ -193,6 +205,7 @@ Analysis results are saved to `puzzles/analysis_results.json`, including:
 - Centralized logging system implemented
 - Test framework complete with comprehensive analysis capabilities
 - Successfully solving puzzles of varying difficulty levels
+- GUI visualization for step-by-step solving process added
 
 ### Implemented Strategies
 - [x] Basic Strategies
@@ -273,6 +286,13 @@ Strategies ordered by complexity and effectiveness:
    - Ordered strategies by computational complexity
    - Optimized candidate elimination routines
    - Enhanced strategy selection process
+
+5. GUI Visualization
+   - Added interactive GUI for step-by-step solving visualization
+   - Displays board state and candidates at each step
+   - Shows strategy application details and updates
+   - Features auto-play mode with adjustable speed
+   - Highlights cells affected by each strategy
 
 ### Testing Framework
 Features:
@@ -446,21 +466,64 @@ Static Methods:
   - solve_puzzle(puzzle_str, verbose, description): Solves a puzzle with options
 ```
 
-### SolverObserver Interface (Legacy)
+### GUI Visualization Interfaces
 ```python
-Interface: SolverObserver
-Provided by: SolverObserver class (sudoku/solver_util.py)
-Used by: StrategicSolver (for backward compatibility)
+Interface: StepInfo
+Provided by: StepInfo class (display/gui_display.py)
+Used by: SudokuGUILogger, SudokuGUIDisplay
+Properties:
+  - strategy_name: Name of the strategy applied
+  - updates: List of updates made (row, col, value) tuples
+  - update_type: Type of update ("elimination" or "insertion")
+  - board_state: Complete copy of the board state at this step
+  - candidates: Complete copy of all candidates at this step
+  - description: Human-readable description of the step
+  - highlighted_cells: List of cells affected by this step
+```
+
+```python
+Interface: SudokuGUILogger
+Provided by: SudokuGUILogger class (display/gui_display.py)
+Extends: SudokuLogger
+Used by: gui_main.py, SudokuGUIDisplay
 Methods:
-  - __init__(verbose): Initializes observer with verbosity setting
-  - on_strategy_found(strategy_name): Called when a strategy is found
-  - on_strategy_applied(strategy_name, updates): Called when a strategy is applied
-  - on_state_changed(state, board): Called when the state machine changes state
+  - __init__(verbose): Initializes logger with verbosity setting
+  - log_initial_state(board): Captures and logs initial board state
+  - log_strategy_found(strategy_name, details): Captures when a strategy is found
+  - log_strategy_applied(strategy_name, updates, update_type): Captures strategy application
+  - log_final_state(board, solved): Captures and logs final board state
+Properties:
+  - steps: List of StepInfo objects representing the solving history
+  - current_step: Current step being built
+```
+
+```python
+Interface: SudokuGUIDisplay
+Provided by: SudokuGUIDisplay class (display/gui_display.py)
+Used by: gui_main.py
+Methods:
+  - __init__(board, logger): Initializes display with board and logger
+  - draw_grid(x_offset, y_offset): Draws the Sudoku grid
+  - draw_numbers(x_offset, y_offset): Draws numbers on the board
+  - draw_candidates(x_offset, y_offset): Draws candidates for each cell
+  - draw_info_panel(): Draws information about the current step
+  - draw_buttons(): Draws control buttons
+  - update_display(): Updates the display with current step
+  - previous_step(): Go to the previous step
+  - next_step(): Go to the next step
+  - toggle_auto_play(): Toggles auto-play mode
+  - increase_speed(), decrease_speed(): Adjust auto-play speed
+  - handle_events(): Handle pygame events
+  - update_auto_play(): Update auto-play if enabled
+  - run(): Runs the visualization loop
+  - close(): Closes the pygame display
 Properties:
   - board: Reference to the Board object
-  - verbose: Whether to show detailed output
-  - strategies_used: List of strategies used during solving
-  - strategy_counts: Dictionary counting strategy usage
+  - logger: Reference to the SudokuGUILogger object
+  - current_step_index: Index of the currently displayed step
+  - current_step: Currently displayed step
+  - auto_play: Whether auto-play is enabled
+  - auto_play_speed: Speed of auto-play in seconds
 ```
 
 ## Component Dependencies
@@ -499,15 +562,23 @@ flowchart TD
     SudokuStateMachine
     Sudoku
     
+    %% GUI components
+    StepInfo
+    SudokuGUILogger
+    SudokuGUIDisplay
+    
     %% Entry points
     main[main.py]
     test_framework[test_framework.py]
+    gui_main[gui_main.py]
+    run_gui[run_gui.py]
     
     %% Main dependencies
     Board --> Strategy
     Board --> Solver
     Board --> SudokuLogger
     Board --> BacktrackingSolver
+    Board --> SudokuGUIDisplay
     
     Strategy --> StrategicSolver
     
@@ -515,6 +586,7 @@ flowchart TD
     SudokuLogger --> SudokuStateMachine
     SudokuLogger --> Sudoku
     SudokuLogger --> SolverUtil
+    SudokuLogger --> SudokuGUILogger
     
     BacktrackingSolver --> SolverFactory
     
@@ -528,9 +600,17 @@ flowchart TD
     
     Sudoku --> SolverUtil
     
+    %% GUI dependencies
+    StepInfo --> SudokuGUILogger
+    SudokuGUILogger --> SudokuGUIDisplay
+    SudokuGUILogger --> gui_main
+    SudokuGUIDisplay --> gui_main
+    
     %% Entry point dependencies
     SolverUtil --> main
     SolverUtil --> test_framework
+    SolverUtil --> gui_main
+    gui_main --> run_gui
     
     %% Layout hints to reduce overlapping
     Board ~~~ Strategy
@@ -538,19 +618,22 @@ flowchart TD
     BacktrackingSolver ~~~ SolverFactory
     SudokuStateMachine ~~~ Sudoku
     main ~~~ test_framework
+    SudokuGUILogger ~~~ SudokuGUIDisplay
     
     %% Style classes with higher contrast
     classDef core fill:#e6b3e6,stroke:#333,stroke-width:2px,color:#000;
     classDef util fill:#b3c6ff,stroke:#333,stroke-width:1px,color:#000;
     classDef solver fill:#b3e6b3,stroke:#333,stroke-width:1px,color:#000;
     classDef app fill:#ffb3b3,stroke:#333,stroke-width:1px,color:#000;
+    classDef gui fill:#ffe6b3,stroke:#333,stroke-width:1px,color:#000;
     classDef entry fill:#ffd9b3,stroke:#333,stroke-width:2px,color:#000;
     
     class Board,Strategy core;
     class SudokuLogger,SolverUtil,SolverFactory,BoardState util;
     class StrategicSolver,BacktrackingSolver,Solver solver;
     class SudokuStateMachine,Sudoku app;
-    class main,test_framework entry;
+    class StepInfo,SudokuGUILogger,SudokuGUIDisplay gui;
+    class main,test_framework,gui_main,run_gui entry;
 ```
 
 ### Key Dependency Relationships
@@ -579,3 +662,92 @@ flowchart TD
    - Most dependencies flow downward from entry points to core components
    - The Board class is used by almost all components
    - The Logger is injected into multiple components for consistent logging
+
+6. **GUI Visualization Components**:
+   - `StepInfo`: Data container for each solving step
+   - `SudokuGUILogger`: Extends SudokuLogger to capture step history
+   - `SudokuGUIDisplay`: Renders the board and provides user interaction
+   - `gui_main.py`: Coordinates the solving process and visualization
+   - `run_gui.py`: Provides a convenient entry point
+
+## GUI Visualization
+
+The project now includes a graphical user interface for visualizing the Sudoku solving process step by step.
+
+### Features
+- **Interactive Controls**: Navigate through solving steps with Previous/Next buttons or keyboard shortcuts
+- **Auto-Play Mode**: Watch the solving process automatically with adjustable speed
+- **Detailed Information Panel**: Shows strategy name, description, and updates for each step
+- **Visual Highlighting**: Highlights cells affected by each strategy application
+- **Candidate Display**: Shows candidate numbers for each cell at every step
+- **Original vs. Solved Numbers**: Distinguishes between original puzzle numbers and solved numbers
+
+### Using the GUI Visualization
+```bash
+# Using the run_gui.py script (recommended)
+python run_gui.py
+
+# Or directly using the gui_main.py script
+python -m display.gui_main
+
+# With custom puzzle
+python run_gui.py -p "puzzle_string" -d "Puzzle description"
+
+# With specific solver
+python run_gui.py -s "Strategic" -p "puzzle_string"
+```
+
+### Architecture and Design
+The GUI visualization follows a layered architecture with clear separation of concerns:
+
+1. **Data Layer**: Reuses the existing `Board` class and solving components
+2. **Logging Layer**: Extended with `SudokuGUILogger` to capture solving steps
+3. **Presentation Layer**: New `SudokuGUIDisplay` class for visualization
+4. **Control Layer**: New `StepInfo` class to encapsulate step data
+
+#### State Management
+- Complete solving process runs first, capturing all steps
+- Each step stores a complete copy of the board state and candidates
+- Users can freely navigate through the solving history
+- The visualization is decoupled from the solving process
+
+#### Component Interactions
+- `SudokuGUILogger` extends the existing logger to capture step data
+- `StepInfo` encapsulates all data for a single solving step
+- `SudokuGUIDisplay` renders the board, candidates, and step information
+- `gui_main.py` coordinates the solving process and visualization
+- `run_gui.py` provides a convenient entry point
+
+### Implementation Details
+The GUI visualization is implemented using pygame and integrates with the existing logger system. It captures the board state and candidates at each step of the solving process, along with information about which strategy was applied and what updates were made.
+
+The visualization is designed to be educational, allowing users to see exactly how each strategy works and how it affects the board state and candidates.
+
+### GUI Visualization Classes (display/gui_display.py)
+- **StepInfo** - Data container for each solving step
+  ```python
+  - __init__(strategy_name, updates, update_type, board_state, candidates, description)
+  - highlighted_cells: List of cells affected by the current step
+  ```
+- **SudokuGUILogger** - Extended logger that captures steps for visualization
+  ```python
+  - __init__(verbose): Initializes logger with verbosity setting
+  - log_initial_state(board): Captures initial board state
+  - log_strategy_found(strategy_name, details): Captures when a strategy is found
+  - log_strategy_applied(strategy_name, updates, update_type): Captures strategy application
+  - log_final_state(board, solved): Captures final board state
+  - steps: List of StepInfo objects representing the solving history
+  ```
+- **SudokuGUIDisplay** - Manages the pygame display and user interaction
+  ```python
+  - __init__(board, logger): Initializes display with board and logger
+  - draw_grid(): Draws the Sudoku grid
+  - draw_numbers(): Draws numbers on the board
+  - draw_candidates(): Draws candidates for each cell
+  - draw_info_panel(): Draws information about the current step
+  - draw_buttons(): Draws control buttons
+  - update_display(): Updates the display with current step
+  - previous_step(), next_step(): Navigate through steps
+  - toggle_auto_play(): Toggles auto-play mode
+  - run(): Runs the visualization loop
+  ```

@@ -6,53 +6,6 @@ from sudoku.sudoku import Sudoku
 import json
 from pathlib import Path
 from sudoku.logger import SudokuLogger
-
-# Keep SolverObserver for backward compatibility
-class SolverObserver():
-    """Base observer class for Sudoku solving process"""
-    def __init__(self, verbose: bool = False):
-        self.step = 1
-        self.board = None
-        self.verbose = verbose
-        self.strategies_used = []
-        # Track summary information even in non-verbose mode
-        self.total_strategies_applied = 0
-        self.strategy_counts = {}
-    
-    def on_strategy_found(self, strategy_name: str):
-        self.strategies_used.append(strategy_name)
-        
-        # Update strategy counts for summary
-        if strategy_name not in self.strategy_counts:
-            self.strategy_counts[strategy_name] = 0
-        self.strategy_counts[strategy_name] += 1
-        
-        if self.verbose:
-            print(f"\nStep {self.step}: Found strategy: {strategy_name}")
-    
-    def on_strategy_applied(self, strategy_name: str, updates: List[tuple]):
-        self.total_strategies_applied += 1
-        
-        if self.verbose:
-            print(f"Updates made: {updates}")
-            # Only try to display the board if it's available
-            if self.board is not None:
-                print("\nBoard after strategy:")
-                self.board.display_board()
-                print("\nCandidates after strategy:")
-                self.board.display_candidates()
-                
-                print("\nBoard state:")
-                print(f"Is valid: {self.board.is_valid()}")
-                print(f"Is solved: {self.board.is_solved()}")
-                print(f"Empty cells: {sum(1 for row in self.board.cells for cell in row if cell is None)}")
-        
-        self.step += 1
-    
-    def on_state_changed(self, state: str, board: Board):
-        self.board = board
-        if state == "unsolvable" and self.verbose:
-            print("\nNo more strategies found")
     
 
 class SolverUtil:

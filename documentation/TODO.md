@@ -1,4 +1,4 @@
-# Sudoku Solver Project - Progress Tracking
+# Sudoku Saga - Progress Tracking
 
 ## Completed Steps
 
