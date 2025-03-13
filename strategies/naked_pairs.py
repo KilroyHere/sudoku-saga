@@ -3,19 +3,6 @@ from itertools import combinations
 from board.board import Board
 from strategies.strategy import Strategy
 
-'''
-This strategy identifies naked pairs in a unit (row, column, or box).
-A naked pair occurs when two cells in a unit have exactly the same two candidates.
-When found, these two candidates can be eliminated from all other cells in that unit.
-
-For example, if two cells in a row both have only candidates 4,7, then 4 and 7 
-cannot appear in any other cell in that row.
-
-Thus making it a candidate eliminator strategy, where candidates are removed based on pattern analysis.
-
-Reference: https://www.sudokuwiki.org/Naked_Candidates#NPs
-'''
-
 class NakedPairsStrategy(Strategy):
     """
     Naked Pairs Strategy.
@@ -33,8 +20,7 @@ class NakedPairsStrategy(Strategy):
         If two cells in a row both have candidates [2,7], then:
         - These two cells must contain 2 and 7
         - 2 and 7 can be eliminated from all other cells in that row
-    
-    Reference: https://www.sudokuwiki.org/Naked_Candidates#NP
+
     """
 
     def __init__(self, board: Board) -> None:

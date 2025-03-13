@@ -3,40 +3,32 @@ from sudoku.sudoku import Sudoku
 from board.board import Board 
 from solvers.solver_factory import SolverFactory
 from solvers.backtracking_solver import BacktrackingSolver
+from sudoku.solver_util import SolverUtil
+import argparse
+import sys
+
 
 def main():
-    # This is a challenging Sudoku puzzle that requires advanced strategies
-    # beyond basic techniques like Single Candidates and Hidden Singles
-    board_string = "309000400200709000087000000750060230600904008028050041000000590000106007006000104"
+    # Set up command-line argument parsing
+    parser = argparse.ArgumentParser(description='Solve a Sudoku puzzle using various strategies.')
+    parser.add_argument('-v', '--verbose', action='store_true', help='Enable verbose output with detailed solving steps')
+    parser.add_argument('-p', '--puzzle', type=str, default="000705006000040081000030050041000008060000020500000430000070000978050000300201000",
+                        help='Sudoku puzzle string (81 characters, use 0 or . for empty cells)')
+    parser.add_argument('-d', '--description', type=str, default="Sudoku puzzle",
+                        help='Description of the puzzle')
     
-    # Create the Board
-    board = Board(board_string)
+    args = parser.parse_args()
     
-    # Create the Strategic Solver (using verbose mode to see detailed progress)
-    solver = SolverFactory().create_solver(board, solverType="Strategic", mode="Verbose")
+    # Validate the puzzle string
+    puzzle_string = args.puzzle.replace('.', '0')  # Allow . as empty cells too
     
-    # Create Sudoku Game
-    sudoku = Sudoku(board, solver)
+    # Solve with specified verbosity
+    result = SolverUtil.solve_puzzle(puzzle_string, verbose=args.verbose, description=args.description)
     
-    print("Initial board:")
-    sudoku.board.display_board()
-    print("\nInitial candidates:")
-    sudoku.board.display_candidates()
-    
-    print("\nAttempting to solve...")
-    solved = sudoku.solve()
-    
-    print("\nFinal board:")
-    sudoku.board.display_board()
-    print("\nFinal candidates:")
-    sudoku.board.display_candidates()
-    
-    if not solved:
+    if not result["solved"]:
         print("\nNote: This puzzle requires advanced strategies not yet implemented.")
-        print("Current strategies available:")
-        for strategy in solver.strategies:
-            print(f"- {strategy.name}")
-    
+
+
 if __name__ == "__main__":
     main()
 

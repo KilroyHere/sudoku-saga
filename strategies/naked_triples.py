@@ -3,19 +3,6 @@ from itertools import combinations
 from board.board import Board
 from strategies.strategy import Strategy
 
-'''
-This strategy identifies naked triples in a unit (row, column, or box).
-A naked triple occurs when three cells in a unit collectively contain only three candidates.
-Each cell must contain 2 or 3 of these candidates. When found, these three candidates
-can be eliminated from all other cells in that unit.
-
-For example, if three cells in a row contain only the numbers [4,5,6] between them
-(like [4,5], [5,6], [4,5,6]), then 4,5,6 cannot appear in any other cell in that row.
-
-This is a candidate eliminator strategy, where candidates are removed based on pattern analysis.
-
-Reference: https://www.sudokuwiki.org/Naked_Candidates#NTs
-'''
 
 class NakedTriplesStrategy(Strategy):
     """
@@ -38,8 +25,7 @@ class NakedTriplesStrategy(Strategy):
         Then:
         - These three cells must contain 2,7,9
         - 2,7,9 can be eliminated from all other cells in that row
-    
-    Reference: https://www.sudokuwiki.org/Naked_Candidates#NT
+
     """
 
     def __init__(self, board: Board) -> None:

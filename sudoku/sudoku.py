@@ -20,65 +20,22 @@ class BoardState:
             state_name=state_name
         )
 
-class SudokuLogger:
-    """Handles logging of Sudoku solving process."""
-    def __init__(self, solver):
-        self.solver = solver
-
-    def log_state(self, board_state: BoardState, is_final: bool = False):
-        """Log the current state of the board."""
-        prefix = "\nState Machine: Final state" if is_final else "\nState Machine: Current state"
-        self.solver.display(f"{prefix} = {board_state.state_name}")
-        self.solver.display(f"Board valid: {board_state.is_valid}")
-        self.solver.display(f"Board solved: {board_state.is_solved}")
-        self.solver.display(f"Empty cells: {board_state.empty_cells}")
-
-    def log_strategy_result(self, strategy_found: bool, strategy_name: str):
-        """Log the result of strategy finding."""
-        self.solver.display(f"Finding strategy: found = {strategy_found}, strategy = {strategy_name}")
-
-    def log_strategy_updates(self, updates: List):
-        """Log the updates made by a strategy."""
-        self.solver.display(f"Applied strategy: updates = {updates}")
-
-    def log_solve_check(self, is_solved: bool):
-        """Log the result of solve check."""
-        self.solver.display(f"Checking if solved: {is_solved}")
-
-class SudokuObserver:
-    """Observer interface for monitoring Sudoku solving process."""
-    def on_strategy_found(self, strategy_name):
-        pass
-    
-    def on_strategy_applied(self, strategy_name, updates):
-        pass
-    
-    def on_state_changed(self, state, board):
-        pass
-
 class Sudoku:
-    def __init__(self, board: Board, solver):
+    def __init__(self, board: Board, solver, logger=None):
         self.board = board
         self.solver = solver
-        self.solver_state_machine = SudokuStateMachine(self.solver)
-        self.observers = []  # List of observers monitoring the solving process
+        self.solver_state_machine = SudokuStateMachine(self.solver, logger)
         assert self.board == self.solver.board, "Solver and Sudoku have different Boards!"
-    
-    def add_observer(self, observer):
-        """Add an observer to monitor the solving process."""
-        self.observers.append(observer)
-        self.solver_state_machine.observers = self.observers
     
     def solve(self):
         """Solve the entire puzzle at once."""
         solved = self.solver_state_machine.solve()
-        print("Solved :)" if solved else "Could not solve :(")
         return solved
 
 class SudokuStateMachine:
-    def __init__(self, solver) -> None:
+    def __init__(self, solver, logger=None) -> None:
         self.solver = solver
-        self.logger = SudokuLogger(solver)
+        self.logger = logger  # Use the new centralized logger
         self.states = {
             "finding_best_strategy": self.finding_best_strategy,
             "applying_strategy": self.applying_strategy,
@@ -88,30 +45,28 @@ class SudokuStateMachine:
         }
         self.current_state = "finding_best_strategy"
         self.no_strategy_count = 0  # Track consecutive no-strategy findings
-        self.observers = []  # Reference to Sudoku's observers
     
     def solve(self):
         """Main method to run the state machine until the puzzle is solved."""
         if not self.solver.is_strategy_based():
             return self.solver.solve()
         
+        # Set the board in the logger and log initial state
+        if self.logger:
+            self.logger.set_board(self.solver.board)
+            self.logger.log_initial_state(self.solver.board)
+        
         while self.current_state not in ("solved", "unsolvable"):
-            board_state = BoardState.from_board(self.solver.board, self.current_state)
-            self.logger.log_state(board_state)
-            
-            # Notify observers of state change
-            for observer in self.observers:
-                observer.on_state_changed(self.current_state, self.solver.board)
+            # Log state change
+            if self.logger:
+                self.logger.log_state_change(self.current_state, self.solver.board)
             
             self.transition_state()
         
         # Log final state
-        final_state = BoardState.from_board(self.solver.board, self.current_state)
-        self.logger.log_state(final_state, is_final=True)
-        
-        # Notify observers of final state
-        for observer in self.observers:
-            observer.on_state_changed(self.current_state, self.solver.board)
+        if self.logger:
+            self.logger.log_state_change(self.current_state, self.solver.board)
+            self.logger.log_final_state(self.solver.board, self.current_state == "solved")
         
         return self.current_state == "solved"
 
@@ -125,19 +80,17 @@ class SudokuStateMachine:
     def finding_best_strategy(self):
         """Determine the best strategy to apply next."""
         strategy_found, best_strategy = self.solver.find_strategy()
-        self.logger.log_strategy_result(strategy_found, best_strategy)
         
         if strategy_found:
-            # Notify observers of strategy found
-            for observer in self.observers:
-                observer.on_strategy_found(best_strategy)
-            
             self.current_state = "applying_strategy"
             self.no_strategy_count = 0  # Reset counter when strategy is found
         else:
             # Only mark as unsolvable if the board is invalid or we've tried too many times
             if not self.solver.board.is_valid() or self.no_strategy_count >= 1:
                 self.current_state = "unsolvable"
+                # Only log no strategies found when transitioning to unsolvable
+                if self.logger:
+                    self.logger.log_no_strategies_found()
             else:
                 # If no immediate strategy is found but board is valid,
                 # we might need more complex strategies
@@ -147,18 +100,29 @@ class SudokuStateMachine:
     def applying_strategy(self):
         """Insert values into the board based on the chosen strategy."""
         updates = self.solver.apply_strategy()
-        self.logger.log_strategy_updates(updates)
         
-        # Notify observers of strategy applied
-        for observer in self.observers:
-            observer.on_strategy_applied(self.solver.current_strategy.name, updates)
+        # Log strategy application
+        if self.logger and hasattr(self.solver, 'current_strategy') and self.solver.current_strategy:
+            # Get update type if available
+            update_type = None
+            if hasattr(self.solver, 'last_update_type'):
+                update_type = self.solver.last_update_type
+            
+            self.logger.log_strategy_applied(
+                self.solver.current_strategy.name, 
+                updates,
+                update_type
+            )
         
         self.current_state = "checking_if_solved"
 
     def checking_if_solved(self):
         """Verify if the sudoku is solved."""
         is_solved = self.solver.board.is_solved()
-        self.logger.log_solve_check(is_solved)
+        
+        # Log solve check
+        if self.logger:
+            self.logger.log_solve_check(is_solved)
         
         self.current_state = "solved" if is_solved else "finding_best_strategy"
     

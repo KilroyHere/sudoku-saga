@@ -11,8 +11,9 @@ from strategies.pointing_pairs import PointingPairsStrategy
 from strategies.box_line_intersection import BoxLineIntersectionStrategy
 
 class StrategicSolver(Solver):
-    def __init__(self, board, mode = "Default"):
+    def __init__(self, board, mode = "Default", logger=None):
         super().__init__(board, mode)
+        self.logger = logger  # Use the new centralized logger
         # Order strategies from simplest to most complex
         self.strategies = [
             SingleCandidateStrategy(self.board),    # Naked Singles
@@ -30,9 +31,19 @@ class StrategicSolver(Solver):
         self.current_strategy = None
         self.values_to_insert = []
         self.candidates_to_eliminate = []
+        self.observers = []  # Keep for backward compatibility
     
     def is_strategy_based(self):
         return True
+
+    def add_observer(self, observer):
+        """Add an observer to track solving progress (kept for backward compatibility)."""
+        self.observers.append(observer)
+    
+    def remove_observer(self, observer):
+        """Remove an observer from tracking (kept for backward compatibility)."""
+        if observer in self.observers:
+            self.observers.remove(observer)
 
     def find_strategy(self):
         """
@@ -46,31 +57,67 @@ class StrategicSolver(Solver):
         self.current_strategy = None
         strategy_found = False
         
-        self.display("\nTrying strategies in order:")
+        if self.logger:
+            # Remove duplicate state change logging
+            # self.logger.log_state_change("finding_strategy", self.board)
+            pass
+        else:
+            self.display("\nTrying strategies in order:")
+            
         for strategy in self.strategies:
-            self.display(f"- Testing {strategy.name}...")
+            if self.logger:
+                self.logger.log_strategy_testing(strategy.name)
+            else:
+                self.display(f"- Testing {strategy.name}...")
+                
             result = strategy.process()
             if result:
                 self.current_strategy = strategy
-                self.display(f"Found applicable strategy: {self.current_strategy.name}")
+                
+                if not self.logger:
+                    self.display(f"Found applicable strategy: {self.current_strategy.name}")
+                    
                 match (self.current_strategy.type):
                     case "Value Finder":
                         self.values_to_insert = result
-                        self.display(f"Values to insert: {self.values_to_insert}")
+                        if not self.logger:
+                            self.display(f"Values to insert: {self.values_to_insert}")
                     case "Candidate Eliminator":
                         self.candidates_to_eliminate = result
-                        self.display(f"Candidates to eliminate: {self.candidates_to_eliminate}")
+                        if not self.logger:
+                            self.display(f"Candidates to eliminate: {self.candidates_to_eliminate}")
                     case _:
                         pass
+                        
                 strategy_found = True
-                # Track the strategy being used
-                self.strategies_used.append(self.current_strategy.name)
+                
+                # Log strategy found
+                if self.logger:
+                    details = self.values_to_insert if self.current_strategy.type == "Value Finder" else self.candidates_to_eliminate
+                    self.logger.log_strategy_found(self.current_strategy.name, details)
+                
+                # Notify observers (for backward compatibility)
+                for observer in self.observers:
+                    if hasattr(observer, 'on_strategy_found'):
+                        observer.on_strategy_found(self.current_strategy.name)
+                        
                 break
             else:
-                self.display(f"  No opportunities found for {strategy.name}")
+                if self.logger:
+                    self.logger.log_strategy_not_found(strategy.name)
+                else:
+                    self.display(f"  No opportunities found for {strategy.name}")
  
         if not strategy_found:
-            self.display("No applicable strategies found")
+            if self.logger:
+                pass
+            else:
+                self.display("No applicable strategies found")
+            
+            # Notify observers of state change (for backward compatibility)
+            for observer in self.observers:
+                if hasattr(observer, 'on_state_changed'):
+                    observer.on_state_changed("unsolvable", self.board)
         
         return (strategy_found, self.current_strategy.name if strategy_found else "None")
     
@@ -82,23 +129,61 @@ class StrategicSolver(Solver):
             list: A list of values inserted into the board, with row, col Information.
         """
         updates = []
+        update_type = None
+        
         if self.current_strategy:
             if self.candidates_to_eliminate:
-                self.display(f"\nApplying {self.current_strategy.name} to eliminate candidates:")
+                update_type = "elimination"
+                if not self.logger:
+                    self.display(f"\nApplying {self.current_strategy.name} to eliminate candidates:")
+                    
                 for row, col, candidate in self.candidates_to_eliminate:
                     if candidate in self.board.candidates[row][col]:
-                        self.display(f"  Removing candidate {candidate} from cell ({row}, {col})")
+                        if not self.logger:
+                            self.display(f"  Removing candidate {candidate} from cell ({row}, {col})")
                         self.board.candidates[row][col].remove(candidate)
                 updates = self.candidates_to_eliminate
                 self.candidates_to_eliminate = []
+                
             elif self.values_to_insert:
-                self.display(f"\nApplying {self.current_strategy.name} to insert values:")
+                update_type = "insertion"
+                if not self.logger:
+                    self.display(f"\nApplying {self.current_strategy.name} to insert values:")
+                    
                 for row, col, num in self.values_to_insert:
-                    self.display(f"  Inserting {num} at cell ({row}, {col})")
+                    if not self.logger:
+                        self.display(f"  Inserting {num} at cell ({row}, {col})")
                     self.board.cells[row][col] = num
                     self.board.update_candidates_on_insert(row, col)
                 updates = self.values_to_insert
                 self.values_to_insert = []
+            
+            # Store update_type for the state machine to use
+            self.last_update_type = update_type
+            
+            # Log strategy application
+            if self.logger:
+                pass
+            else:
+                self.display(f"Applied strategy: updates = {updates}")
+            
+            # Notify observers (for backward compatibility)
+            for observer in self.observers:
+                if hasattr(observer, 'on_strategy_applied'):
+                    observer.on_strategy_applied(self.current_strategy.name, updates)
+            
+            # Check if puzzle is solved
+            if self.board.is_solved():
+                # Notify observers of state change (for backward compatibility)
+                for observer in self.observers:
+                    if hasattr(observer, 'on_state_changed'):
+                        observer.on_state_changed("solved", self.board)
+            elif not self.board.is_valid():
+                # Notify observers of state change (for backward compatibility)
+                for observer in self.observers:
+                    if hasattr(observer, 'on_state_changed'):
+                        observer.on_state_changed("invalid", self.board)
+        
         return updates
             
     def _eliminate_candidates(self):

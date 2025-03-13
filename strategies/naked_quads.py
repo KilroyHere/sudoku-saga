@@ -3,20 +3,6 @@ from itertools import combinations
 from board.board import Board
 from strategies.strategy import Strategy
 
-'''
-This strategy identifies naked quads in a unit (row, column, or box).
-A naked quad occurs when four cells in a unit collectively contain only four candidates.
-Each cell must contain 2, 3, or 4 of these candidates. When found, these four candidates
-can be eliminated from all other cells in that unit.
-
-For example, if four cells in a row contain only the numbers [1,2,3,4] between them
-(like [1,2], [2,3,4], [1,3], [1,2,3,4]), then 1,2,3,4 cannot appear in any other cell in that row.
-
-This is a candidate eliminator strategy, where candidates are removed based on pattern analysis.
-
-Reference: https://www.sudokuwiki.org/Naked_Candidates#NQs
-'''
-
 class NakedQuadsStrategy(Strategy):
     """
     Naked Quads Strategy.
@@ -39,8 +25,7 @@ class NakedQuadsStrategy(Strategy):
         Then:
         - These four cells must contain 2,4,7,9
         - 2,4,7,9 can be eliminated from all other cells in that row
-    
-    Reference: https://www.sudokuwiki.org/Naked_Candidates#NQ
+
     """
 
     def __init__(self, board: Board) -> None:

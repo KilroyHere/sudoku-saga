@@ -20,7 +20,6 @@ class BoxLineIntersectionStrategy(Strategy):
         - 4 must be in one of those cells in that box
         - 4 can be eliminated from all other cells in that row outside the box
     
-    Reference: https://www.sudokuwiki.org/Intersection_Removal#IR
     """
     
     def __init__(self, board: Board) -> None:

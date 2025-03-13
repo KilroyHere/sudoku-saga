@@ -3,19 +3,6 @@ from itertools import combinations
 from board.board import Board
 from strategies.strategy import Strategy
 
-'''
-This strategy identifies hidden pairs in a unit (row, column, or box).
-A hidden pair occurs when two candidates appear in only two cells within a unit,
-and these cells may contain other candidates.
-
-For example, if in a row, the numbers 4,7 only appear in two cells
-(even though these cells may have other candidates), then 4 and 7 must go in these cells,
-and all other candidates can be eliminated from these cells.
-
-This is a candidate eliminator strategy, where candidates are removed based on pattern analysis.
-
-Reference: https://www.sudokuwiki.org/Hidden_Candidates#HP
-'''
 
 class HiddenPairsStrategy(Strategy):
     """
@@ -35,8 +22,7 @@ class HiddenPairsStrategy(Strategy):
         have other candidates like [2,4,7,9] and [2,5,7,8]), then:
         - Cells A,B must contain 2,7
         - All other candidates (4,5,8,9) can be eliminated from these cells
-    
-    Reference: https://www.sudokuwiki.org/Hidden_Candidates#HP
+
     """
 
     def __init__(self, board: Board) -> None:

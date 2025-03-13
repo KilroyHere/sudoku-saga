@@ -3,19 +3,6 @@ from itertools import combinations
 from board.board import Board
 from strategies.strategy import Strategy
 
-'''
-This strategy identifies hidden triples in a unit (row, column, or box).
-A hidden triple occurs when three candidates appear in only three cells within a unit,
-and these cells may contain other candidates.
-
-For example, if in a row, the numbers 4,7,9 only appear in three cells
-(even though these cells may have other candidates), then 4,7,9 must go in these cells,
-and all other candidates can be eliminated from these cells.
-
-This is a candidate eliminator strategy, where candidates are removed based on pattern analysis.
-
-Reference: https://www.sudokuwiki.org/Hidden_Candidates#HT
-'''
 
 class HiddenTriplesStrategy(Strategy):
     """
@@ -35,8 +22,7 @@ class HiddenTriplesStrategy(Strategy):
         have other candidates like [2,4,5,9], [2,5,8], [4,7,8,9]), then:
         - Cells A,B,C must contain 2,5,7
         - All other candidates (4,8,9) can be eliminated from these cells
-    
-    Reference: https://www.sudokuwiki.org/Hidden_Candidates#HT
+  
     """
 
     def __init__(self, board: Board) -> None:

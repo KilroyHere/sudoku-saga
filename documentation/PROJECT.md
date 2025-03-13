@@ -1,7 +1,7 @@
 # Sudoku Solver Project
 
 ## Project Overview
-A Python-based Sudoku solver implementing various solving techniques from basic to advanced strategies. The project follows a structured approach using both backtracking and strategic methods, with a comprehensive set of solving strategies organized by complexity level.
+A Python-based Sudoku solver implementing various solving techniques from basic to advanced strategies. The project follows a structured approach using both backtracking and strategic methods, with a comprehensive set of solving strategies organized by complexity level. The solver now features a centralized logging system for better output control and improved user experience.
 
 ## Directory Structure
 ```
@@ -29,7 +29,9 @@ sudoku/
 │   ├── naked_quads.py
 │   └── hidden_quads.py
 ├── sudoku/
-│   └── sudoku.py      # Main game logic and state machine
+│   ├── sudoku.py      # Main game logic and state machine
+│   ├── solver_util.py # Utility functions for solving
+│   └── logger.py      # Centralized logging system
 ├── test/
 │   └── test_framework.py  # Comprehensive testing framework
 └── puzzles/
@@ -45,14 +47,20 @@ sudoku/
 2. Solver Selection and Initialization
    - Factory creates appropriate solver instance
    - Initializes strategy hierarchy for strategic solving
-3. Strategic Solving Process
+3. Logger Creation
+   - Creates a logger instance based on verbosity settings
+   - Tracks the solving process and strategy applications
+4. Strategic Solving Process
    - Strategies applied from simplest to most complex
    - Each strategy either places values or eliminates candidates
    - Process continues until solved or unsolvable
-4. State Machine Control
+5. State Machine Control
    - Manages solving process through defined states
    - Handles strategy selection and application
    - Tracks solving progress and completion
+6. Output Generation
+   - Logger formats and displays the solving process
+   - Provides summary of strategies used
 
 ## Main Classes and Functions
 
@@ -68,9 +76,12 @@ sudoku/
 
 ### Solver Hierarchy
 - **Solver** (solvers/solver.py) - Base abstract class
+- **SolverFactory** (solvers/solver_factory.py) - Creates appropriate solvers
 - **BacktrackingSolver** (solvers/backtracking_solver.py) - Uses recursive backtracking
 - **StrategicSolver** (solvers/strategic_solver.py) - Uses human-like strategies
-- **SolverFactory** (solvers/solver_factory.py) - Creates appropriate solvers
+  - Now integrated with centralized logger
+  - Tracks update types (elimination or insertion)
+
 
 ### Strategy Hierarchy
 - **Strategy** (strategies/strategy.py) - Base class for all strategies
@@ -83,6 +94,20 @@ sudoku/
   - **HiddenTriplesStrategy** - Identifies three numbers that can only go in three cells in a unit
   - **HiddenQuadsStrategy** - Identifies four numbers that can only go in four cells in a unit
 
+### SudokuLogger (logger.py)
+- Centralized logging system for the solving process
+- Supports both verbose and non-verbose output modes
+- Tracks strategy usage and provides summary statistics
+- Key methods:
+  ```python
+  - log_initial_state(board)
+  - log_strategy_found(strategy_name, details)
+  - log_strategy_applied(strategy_name, updates, update_type)
+  - log_state_change(state, board)
+  - log_final_state(board, solved)
+  - print_summary()
+  ```
+
 ### Sudoku (sudoku/sudoku.py)
 - Manages the overall game
 - Uses a state machine (SudokuStateMachine) to control the solving process
@@ -92,6 +117,23 @@ sudoku/
   - checking_if_solved
   - solved
   - unsolvable
+
+### SolverUtil (sudoku/solver_util.py)
+- Utility class for solving puzzles
+- Creates and configures solvers
+- Sets up the centralized logger
+- Provides a simplified interface for solving puzzles
+
+## Command-line Interface (main.py)
+- Simple interface for solving puzzles from the command line
+- Supports various options:
+  - Verbose output (-v, --verbose)
+  - Custom puzzle input (-p, --puzzle)
+  - Puzzle description (-d, --description)
+- Example usage:
+  ```bash
+  python main.py -v -p "puzzle_string" -d "My puzzle"
+  ```
 
 ## Test Framework (test/test_framework.py)
 The project includes a comprehensive test framework for analyzing and validating Sudoku solving strategies.
@@ -148,6 +190,7 @@ Analysis results are saved to `puzzles/analysis_results.json`, including:
 
 ## Project Status
 - Core solving strategies implemented and tested
+- Centralized logging system implemented
 - Test framework complete with comprehensive analysis capabilities
 - Successfully solving puzzles of varying difficulty levels
 
@@ -210,13 +253,23 @@ Strategies ordered by complexity and effectiveness:
    - Complex inference techniques
 
 ### Recent Updates
-1. Basic Strategy Completion
-   - Implemented Pointing Pairs
-   - Implemented Box/Line Intersection
-   - Integrated with existing strategy framework
-   - Verified against test cases
+1. Centralized Logging System
+   - Implemented SudokuLogger class for consistent output
+   - Added support for verbose and non-verbose modes
+   - Integrated with state machine and solver classes
+   - Added detailed strategy tracking and summary statistics
 
-2. Performance Optimizations
+2. Command-line Interface Improvements
+   - Added support for puzzle descriptions
+   - Enhanced verbosity control
+   - Improved error handling and user feedback
+
+3. Observer Pattern Refactoring
+   - Replaced observer pattern with centralized logger
+   - Maintained backward compatibility
+   - Simplified code structure and reduced redundancy
+
+4. Performance Optimizations
    - Ordered strategies by computational complexity
    - Optimized candidate elimination routines
    - Enhanced strategy selection process
@@ -242,30 +295,249 @@ python test/test_framework.py --test-file path/to/test_cases.json
 
 ## Component Interfaces
 
+### Board Interface
+```python
+Interface: Board
+Provided by: Board class (board/board.py)
+Used by: Solvers, Strategies, SudokuStateMachine
+Methods:
+  - __init__(board_string): Initializes board from an 81-character string
+  - string_to_board(board_string): Converts string to 2D grid
+  - initialize_candidates(): Sets up initial candidates for each cell
+  - update_candidates_on_insert(row, col): Updates candidates after value insertion
+  - update_candidates_backtracking(): Updates all candidates (for backtracking)
+  - is_valid(): Checks if the current board state is valid
+  - is_solved(): Checks if the puzzle is completely solved
+  - display_board(): Prints the current board state
+  - display_candidates(): Prints the current candidates for each cell
+Properties:
+  - cells: 2D grid of values (None for empty cells)
+  - candidates: 2D grid of candidate sets for each cell
+  - original: Copy of the initial board state
+```
+
+### BoardState Interface
+```python
+Interface: BoardState
+Provided by: BoardState class (sudoku/sudoku.py)
+Used by: SudokuStateMachine
+Methods:
+  - from_board(board, state_name): Class method to create BoardState from a Board
+Properties:
+  - is_valid: Whether the board state is valid
+  - is_solved: Whether the board is solved
+  - empty_cells: Number of empty cells remaining
+  - state_name: Name of the current state
+```
+
 ### Strategy Interface
 ```python
 Interface: Strategy
+Provided by: Strategy class (strategies/strategy.py)
+Used by: StrategicSolver
 Methods:
-  - process(): Returns List[Tuple[int, int, int]]
-  - _get_cells_with_candidate()
-  + strategy-specific helper methods
+  - __init__(board, name, type): Initializes strategy with board reference
+  - process(): Returns List[Tuple[int, int, int]] of updates to make
+  - _get_empty_cells_in_unit(unit_type, index): Helper for finding empty cells
+  - _get_cells_with_candidate(value): Helper for finding cells with specific candidate
+Properties:
+  - name: Name of the strategy
+  - type: Type of strategy ("Value Finder" or "Candidate Eliminator")
+  - board: Reference to the Board object
 ```
 
 ### Solver Interface
 ```python
 Interface: StrategicSolver
+Provided by: StrategicSolver class (solvers/strategic_solver.py)
+Used by: Sudoku, SudokuStateMachine
 Methods:
-  - find_strategy()
-  - apply_strategy()
-  - _eliminate_candidates()
-  - _insert_values()
+  - __init__(board, mode, logger): Initializes solver with board and logger
+  - is_strategy_based(): Returns True for strategic solvers
+  - find_strategy(): Finds the best strategy to apply next
+  - apply_strategy(): Applies the current strategy to the board
+  - _eliminate_candidates(): Helper for eliminating candidates
+  - _insert_values(): Helper for inserting values
+Properties:
+  - board: Reference to the Board object
+  - strategies: List of Strategy objects in order of complexity
+  - current_strategy: Currently selected strategy
+  - logger: Reference to the SudokuLogger object
+  - last_update_type: Type of the last update ("elimination" or "insertion")
 ```
 
-## Dependencies
-- Strategy classes → Board class
-- StrategicSolver → Strategy implementations
-- Test framework → Solver and Board implementations
-- State machine → Strategy execution control
+### SolverFactory Interface
+```python
+Interface: SolverFactory
+Provided by: SolverFactory class (solvers/solver_factory.py)
+Used by: SolverUtil
+Static Methods:
+  - create_solver(board, solverType, mode): Creates and returns a solver instance
+    - solverType: "Strategic" (default), "Backtracking", or "CSP"
+    - mode: "Default", "Observer", or other modes
+```
 
+### Sudoku Interface
+```python
+Interface: Sudoku
+Provided by: Sudoku class (sudoku/sudoku.py)
+Used by: main.py, SolverUtil
+Methods:
+  - __init__(board, solver, logger): Initializes with board, solver, and logger
+  - solve(): Solves the puzzle using the state machine
+Properties:
+  - board: Reference to the Board object
+  - solver: Reference to the Solver object
+  - solver_state_machine: Reference to the SudokuStateMachine
+```
 
+### State Machine Interface
+```python
+Interface: SudokuStateMachine
+Provided by: SudokuStateMachine class (sudoku/sudoku.py)
+Used by: Sudoku
+Methods:
+  - __init__(solver, logger): Initializes state machine with solver and logger
+  - solve(): Runs the state machine until puzzle is solved or unsolvable
+  - transition_state(): Transitions to the next state based on current state
+  - finding_best_strategy(): State handler for finding the best strategy
+  - applying_strategy(): State handler for applying the current strategy
+  - checking_if_solved(): State handler for checking if the puzzle is solved
+Properties:
+  - solver: Reference to the Solver object
+  - logger: Reference to the SudokuLogger object
+  - current_state: Current state of the state machine
+  - states: Dictionary mapping state names to handler methods
+```
 
+### Logger Interface
+```python
+Interface: SudokuLogger
+Provided by: SudokuLogger class (sudoku/logger.py)
+Used by: Sudoku, SudokuStateMachine, StrategicSolver, SolverUtil
+Methods:
+  - __init__(verbose): Initializes logger with verbosity setting
+  - set_board(board): Sets the current board reference
+  - log_initial_state(board): Logs the initial state of the board
+  - log_strategy_found(strategy_name, details): Logs when a strategy is found
+  - log_strategy_applied(strategy_name, updates, update_type): Logs strategy application
+  - log_strategy_testing(strategy_name): Logs when a strategy is being tested
+  - log_strategy_not_found(strategy_name): Logs when a strategy finds no opportunities
+  - log_no_strategies_found(): Logs when no strategies are found
+  - log_state_change(state, board): Logs state machine state changes
+  - log_solve_check(is_solved): Logs the result of checking if solved
+  - log_final_state(board, solved): Logs the final state of the board
+  - print_summary(): Prints a summary of the solving process
+Properties:
+  - verbose: Whether to show detailed output
+  - step_counter: Counter for strategy application steps
+  - strategies_used: List of strategies used during solving
+  - strategy_counts: Dictionary counting strategy usage
+  - current_board: Reference to the current Board object
+```
+
+### SolverUtil Interface
+```python
+Interface: SolverUtil
+Provided by: SolverUtil class (sudoku/solver_util.py)
+Used by: main.py, test_framework.py
+Static Methods:
+  - create_solver(board, solver_type, mode): Creates a solver instance
+  - solve_puzzle(puzzle_str, verbose, description): Solves a puzzle with options
+```
+
+### SolverObserver Interface (Legacy)
+```python
+Interface: SolverObserver
+Provided by: SolverObserver class (sudoku/solver_util.py)
+Used by: StrategicSolver (for backward compatibility)
+Methods:
+  - __init__(verbose): Initializes observer with verbosity setting
+  - on_strategy_found(strategy_name): Called when a strategy is found
+  - on_strategy_applied(strategy_name, updates): Called when a strategy is applied
+  - on_state_changed(state, board): Called when the state machine changes state
+Properties:
+  - board: Reference to the Board object
+  - verbose: Whether to show detailed output
+  - strategies_used: List of strategies used during solving
+  - strategy_counts: Dictionary counting strategy usage
+```
+
+## Component Dependencies
+
+### Direct Dependencies
+- Board: Used by Strategy, Solver, SudokuStateMachine, SudokuLogger, Sudoku
+- Strategy: Used by StrategicSolver
+- StrategicSolver: Uses Strategy, Board, SudokuLogger; Used by Sudoku, SudokuStateMachine, SolverFactory
+- SudokuLogger: Uses Board; Used by StrategicSolver, SudokuStateMachine, Sudoku, SolverUtil
+- SudokuStateMachine: Uses Solver, SudokuLogger, BoardState; Used by Sudoku
+- SolverUtil: Uses Board, SolverFactory, StrategicSolver, Sudoku, SudokuLogger; Used by main.py, test_framework.py
+- SolverFactory: Uses BacktrackingSolver, StrategicSolver; Used by SolverUtil
+- BoardState: Uses Board; Used by SudokuStateMachine
+- Sudoku: Uses Board, Solver, SudokuStateMachine; Used by SolverUtil
+- BacktrackingSolver: Uses Board; Used by SolverFactory
+
+### Dependency Flow Diagram
+```
+                                ┌─────────────┐
+                                │   main.py   │
+                                └──────┬──────┘
+                                       │
+                                       ▼
+┌─────────────────┐             ┌─────────────────┐              ┌─────────────────┐
+│test_framework   │───────────▶│    SolverUtil    │────────────▶│  SolverFactory   │
+└─────────────────┘             └──────┬──────────┘              └────┬─────┬──────┘
+                                       │                              │     │
+                                       │                              │     │
+                                       ▼                              │     ▼
+                              ┌─────────────────┐                     │  ┌─────────────────┐
+                              │     Sudoku      │                     │  │BacktrackingSolver│
+                              └────────┬────────┘                     │  └─────────────────┘
+                                       │                              │
+                                       ▼                              │
+┌─────────────┐               ┌─────────────────┐                     │
+│  BoardState │◀─────────────│SudokuStateMachine│                     │
+└──────┬──────┘               └────────┬────────┘                     │
+       │                               │                              │
+       │                               ▼                              │
+       │                      ┌─────────────────┐                     │
+       │                      │  SudokuLogger   │◀────────────────────┘
+       │                      └────────┬────────┘                     │
+       │                               │                              │
+       │                               ▼                              │
+       │                      ┌─────────────────┐                     │
+       └─────────────────────▶│     Board       │◀────────────────────┘
+                              └────────┬────────┘
+                                       │
+                                       ▼
+                              ┌─────────────────┐              ┌─────────────────┐
+                              │ StrategicSolver │◀─────────────│    Strategy     │
+                              └─────────────────┘              └─────────────────┘
+```
+
+### Key Dependency Relationships
+
+1. **Entry Points**:
+   - `main.py`: Command-line interface for solving puzzles
+   - `test_framework.py`: Testing framework for analyzing puzzles
+
+2. **Core Components**:
+   - `Board`: Central data structure representing the Sudoku grid
+   - `Strategy`: Base class for all solving strategies
+   - `StrategicSolver`: Implements the strategy-based solving approach
+   - `SudokuStateMachine`: Controls the solving process flow
+   - `SudokuLogger`: Handles output and tracking of the solving process
+
+3. **Utility Components**:
+   - `SolverUtil`: Provides simplified interface for solving puzzles
+   - `SolverFactory`: Creates appropriate solver instances
+   - `BoardState`: Encapsulates the state of the board at a point in time
+
+4. **Circular Dependencies**:
+   - `Sudoku` ↔ `SudokuStateMachine`: Sudoku creates the state machine, which references back to the solver
+   - `StrategicSolver` ↔ `Strategy`: StrategicSolver uses strategies, which reference the board from the solver
+
+5. **Dependency Direction**:
+   - Most dependencies flow downward from entry points to core components
+   - The Board class is used by almost all components
+   - The Logger is injected into multiple components for consistent logging

@@ -1,5 +1,4 @@
 import sys
-import os
 import json
 import traceback
 import numpy as np
@@ -9,39 +8,7 @@ from pathlib import Path
 sys.path.append(str(Path(__file__).parent.parent))
 
 from puzzles.extract_puzzles import load_and_analyze_puzzles
-from board.board import Board
-from solvers.solver_factory import SolverFactory
-from sudoku.sudoku import Sudoku, SudokuObserver
-
-class TestObserver(SudokuObserver):
-    def __init__(self, verbose=False):
-        self.step = 1
-        self.board = None
-        self.verbose = verbose
-    
-    def on_strategy_found(self, strategy_name):
-        print(f"\nStep {self.step}: Found strategy: {strategy_name}")
-    
-    def on_strategy_applied(self, strategy_name, updates):
-        print(f"Updates made: {updates}")
-        if self.verbose:
-            print("\nBoard after strategy:")
-            self.board.display_board()
-            print("\nCandidates after strategy:")
-            self.board.display_candidates()
-            
-            # Debug output
-            print("\nBoard state:")
-            print(f"Is valid: {self.board.is_valid()}")
-            print(f"Is solved: {self.board.is_solved()}")
-            print(f"Empty cells: {sum(1 for row in self.board.cells for cell in row if cell is None)}")
-        
-        self.step += 1
-    
-    def on_state_changed(self, state, board):
-        self.board = board
-        if state == "unsolvable":
-            print("\nNo more strategies found")
+from sudoku.solver_util import SolverUtil
 
 class SudokuTestFramework:
     def __init__(self):
@@ -49,33 +16,23 @@ class SudokuTestFramework:
         self.strategy_counts = {}
         
     def analyze_puzzles(self, num_puzzles=100, verbose=False):
-        """
-        Analyze multiple puzzles to gather statistics about strategy usage.
-        
-        Args:
-            num_puzzles (int): Number of puzzles to analyze
-            verbose (bool): Whether to print progress
-        """
+        """Analyze multiple puzzles to gather statistics about strategy usage."""
         print(f"Loading {num_puzzles} puzzles...")
         quizzes, solutions = load_and_analyze_puzzles(num_puzzles)
         
-        for idx, (quiz, solution) in enumerate(zip(quizzes, solutions)):
-            # Convert numpy arrays to strings
-            puzzle_str = ''.join(str(x) for x in quiz.flatten())
-            solution_str = ''.join(str(x) for x in solution.flatten())
+        # Convert numpy arrays to strings
+        puzzle_strings = [''.join(str(x) for x in quiz.flatten()) for quiz in quizzes]
+        
+        # Process each puzzle
+        for idx, puzzle_str in enumerate(puzzle_strings):
+            if verbose and idx % 100 == 0:
+                print(f"\rProcessed {idx+1}/{len(puzzle_strings)} puzzles", end="")
             
-            # Create board and solver
-            board = Board(puzzle_str)
-            solver = SolverFactory.create_solver(board, solverType="Strategic", mode="Default")
-            solver.clear_strategies_used()  # Clear any previous strategies
+            # Solve the puzzle
+            result = SolverUtil.solve_puzzle(puzzle_str, verbose=False)
             
-            # Create Sudoku game and solve
-            sudoku = Sudoku(board, solver)
-            solved = sudoku.solve()
-            
-            # Get strategies used and update counts
-            strategies_used = solver.get_strategies_used()
-            for strategy in strategies_used:
+            # Update strategy counts
+            for strategy in result["strategies_used"]:
                 if strategy not in self.strategy_counts:
                     self.strategy_counts[strategy] = 0
                 self.strategy_counts[strategy] += 1
@@ -84,61 +41,20 @@ class SudokuTestFramework:
             self.results.append({
                 "id": idx,
                 "puzzle": puzzle_str,
-                "solution": solution_str,
-                "strategies_used": strategies_used,
-                "solved": board.is_solved()
+                "solution": ''.join(str(x) for x in solutions[idx].flatten()),
+                "strategies_used": result["strategies_used"],
+                "solved": result["solved"]
             })
-            
-            if verbose and idx % 100 == 0:
-                print(f"\rProcessed {idx+1}/{num_puzzles} puzzles", end="")
-                
+        
         if verbose:
             print(f"\nFinished processing {len(self.results)} puzzles")
             self.print_statistics()
     
     def test_puzzle(self, puzzle_str, description="", verbose=False):
-        """
-        Test a single puzzle with detailed output of each step.
-        
-        Args:
-            puzzle_str (str): The puzzle string to test
-            description (str): Optional description of the puzzle
-            verbose (bool): Whether to show detailed output
-        """
+        """Test a single puzzle with detailed output of each step."""
         try:
-            print(f"\nTesting puzzle {description}")
-            print(f"Puzzle string: {puzzle_str}")
-            
-            board = Board(puzzle_str)
-            solver = SolverFactory.create_solver(board, solverType="Strategic", mode="Verbose" if verbose else "Default")
-            
-            # Create Sudoku game and add observer
-            sudoku = Sudoku(board, solver)
-            observer = TestObserver(verbose=verbose)
-            sudoku.add_observer(observer)
-            
-            if verbose:
-                print("Initial board:")
-                board.display_board()
-                print("\nInitial candidates:")
-                board.display_candidates()
-            
-            # Solve the puzzle
-            solved = sudoku.solve()
-            
-            # Get final state
-            print(f"\nPuzzle {'solved' if solved else 'not solved'}")
-            if not solved:
-                print(f"Remaining empty cells: {sum(1 for row in board.cells for cell in row if cell is None)}")
-            
-            # Print strategies in order
-            strategies = solver.get_strategies_used()
-            if strategies:
-                print("\nStrategies used in order:")
-                for i, strategy in enumerate(strategies, 1):
-                    print(f"{i}. {strategy}")
-            else:
-                print("\nNo strategies were used")
+            result = SolverUtil.solve_puzzle(puzzle_str, verbose=verbose, description=description)
+        
                 
         except Exception as e:
             print(f"\nError testing puzzle {description}:")

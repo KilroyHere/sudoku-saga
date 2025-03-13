@@ -3,19 +3,6 @@ from itertools import combinations
 from board.board import Board
 from strategies.strategy import Strategy
 
-'''
-This strategy identifies hidden quads in a unit (row, column, or box).
-A hidden quad occurs when four candidates appear in only four cells within a unit,
-and these cells may contain other candidates.
-
-For example, if in a row, the numbers 1,2,3,4 only appear in four cells
-(even though these cells may have other candidates), then 1,2,3,4 must go in these cells,
-and all other candidates can be eliminated from these cells.
-
-This is a candidate eliminator strategy, where candidates are removed based on pattern analysis.
-
-Reference: https://www.sudokuwiki.org/Hidden_Candidates#HQ
-'''
 
 class HiddenQuadsStrategy(Strategy):
     """
@@ -34,8 +21,6 @@ class HiddenQuadsStrategy(Strategy):
         other candidates), then:
         - Cells A,B,C,D must contain 1,2,3,4
         - All other candidates can be eliminated from these cells
-    
-    Reference: https://www.sudokuwiki.org/Hidden_Candidates#HQ
     """
 
     def __init__(self, board: Board) -> None:

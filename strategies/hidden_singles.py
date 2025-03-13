@@ -2,18 +2,6 @@ from typing import List, Optional, Tuple, Dict, Set
 from board.board import Board
 from strategies.strategy import Strategy
 
-'''
-This strategy identifies hidden singles in a unit (row, column, or box).
-A hidden single occurs when a candidate appears in only one cell within a unit,
-even though that cell may have other candidates.
-
-For example, if in a row, the number 4 only appears as a candidate in one cell
-(even though that cell may have other candidates like [4,7,9]), then 4 must go in that cell.
-
-This is a value finder strategy, where we place a value when we find a hidden single.
-
-Reference: https://www.sudokuwiki.org/Hidden_Singles
-'''
 
 class HiddenSinglesStrategy(Strategy):
     """
@@ -33,8 +21,6 @@ class HiddenSinglesStrategy(Strategy):
         that cell has other candidates like [2,5,7]), then:
         - That cell must contain 5
         - All other candidates (2,7) can be eliminated
-    
-    Reference: https://www.sudokuwiki.org/Hidden_Singles
     """
 
     def __init__(self, board: Board) -> None:

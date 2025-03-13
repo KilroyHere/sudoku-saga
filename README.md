@@ -1,6 +1,6 @@
 # Sudoku Solver
 
-A comprehensive Python-based Sudoku solver implementing human-like solving strategies, from basic techniques to advanced solving methods.
+A comprehensive Python-based Sudoku solver implementing human-like solving strategies, from basic techniques to advanced solving methods. The solver now features a centralized logging system with both verbose and non-verbose output modes.
 
 ## Features
 
@@ -9,6 +9,8 @@ A comprehensive Python-based Sudoku solver implementing human-like solving strat
 - 📊 Detailed solving process visualization
 - 📈 Performance analysis and statistics
 - 🧪 Comprehensive testing framework
+- 🔄 Centralized logging system with verbosity control
+- 🖥️ User-friendly command-line interface
 
 ### Implemented Strategies
 
@@ -24,47 +26,61 @@ A comprehensive Python-based Sudoku solver implementing human-like solving strat
 - X-Wing Strategy
 - Swordfish Strategy
 
-<!-- ## Installation
-
-1. Clone the repository:
-```bash
-git clone https://github.com/yourusername/sudoku-solver.git
-cd sudoku-solver
-``` -->
 
 ## Usage
 
 ### Basic Usage
 
-1. Solve a single puzzle:
+1. Solve a puzzle with default settings:
 ```bash
-python test/test_framework.py --test "000921003009000060000000500080403006007000800500700040003000000020000700800195000"
+python main.py
 ```
 
-2. Analyze multiple puzzles:
+2. Solve a specific puzzle:
 ```bash
-python test/test_framework.py --analyze 100
+python main.py -p "530070000600195000098000060800060003400803001700020006060000280000419005000080079"
 ```
 
-3. Test from a file:
+3. Enable verbose output:
 ```bash
-python test/test_framework.py --test-file puzzles/selected_puzzles.json
+python main.py -v
 ```
+
+4. Provide a puzzle description:
+```bash
+python main.py -p "puzzle_string" -d "My difficult puzzle"
+```
+
+### Command-line Arguments
+
+- `-v, --verbose`: Enable verbose output with detailed solving steps
+- `-p, --puzzle`: Specify a Sudoku puzzle string (81 characters, use 0 or . for empty cells)
+- `-d, --description`: Provide a description for the puzzle
+
+### Output Modes
+
+#### Non-verbose Mode
+- Shows initial and final board states
+- Displays strategies applied and their effects
+- Provides a summary of strategies used
+
+#### Verbose Mode
+- Shows detailed step-by-step solving process
+- Displays board state after each strategy application
+- Shows candidate eliminations and value insertions
+- Provides comprehensive solving statistics
 
 ### Advanced Usage
 
-#### Verbose Output
-Add `--verbose` for detailed solving process:
+#### Testing Framework
 ```bash
 python test/test_framework.py --test "puzzle_string" --verbose
 ```
 
 #### Strategy Analysis
-View strategy usage statistics:
 ```bash
 python test/test_framework.py --analyze 100 
 ```
-
 
 ## Solving Strategies
 
@@ -100,11 +116,9 @@ The project includes a comprehensive testing framework for:
 - Puzzle difficulty assessment
 - Solving process visualization
 
-
-
 ## Documentation
 
-
+For detailed documentation, see the [PROJECT.md](documentation/PROJECT.md) file.
 
 ## License
 

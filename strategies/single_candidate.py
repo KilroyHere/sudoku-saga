@@ -2,36 +2,20 @@ from typing import List, Optional, Tuple
 from board.board import Board
 from strategies.strategy import Strategy
 
-'''
-This strategy effectively handles various scenarios where a cell's value can 
-be conclusively determined by following the 3 basic rules:
-Set(1..9) in a row 
-Set(1..9) in a column 
-Set(1..9) in a box
 
-Thus making it the only strategy where values are placed.
-All other strategies work towards eliminating candidates until one remains.
-
-Reference: https://www.sudokuwiki.org/Getting_Started    
-'''
 
 class SingleCandidateStrategy(Strategy):
-    """
-    Single Candidate Strategy (also known as Naked Singles).
-    
-    This strategy identifies cells that have only one possible candidate value.
-    It is the most basic solving technique and the only strategy that directly
-    places values in cells rather than eliminating candidates.
-    
-    The strategy works by:
-    1. Finding cells with only one remaining candidate
-    2. Placing that candidate value in the cell
-    
-    Example:
-        If a cell has candidates [4], then 4 must be the value for that cell.
-    
-    Reference: https://www.sudokuwiki.org/Getting_Started
-    """
+    '''
+    This strategy effectively handles various scenarios where a cell's value can 
+    be conclusively determined by following the 3 basic rules:
+    Set(1..9) in a row 
+    Set(1..9) in a column 
+    Set(1..9) in a box
+
+    Thus making it the only strategy where values are placed.
+    All other strategies work towards eliminating candidates until one remains.
+ 
+    '''
 
     def __init__(self, board: Board) -> None:
         """
