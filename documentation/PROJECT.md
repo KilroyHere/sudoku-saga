@@ -25,14 +25,18 @@ sudoku/
 │   ├── strategy.py        # Base Strategy class
 │   ├── single_candidate.py
 │   ├── hidden_singles.py
-│   ├── pointing_pairs.py  # Recently implemented
-│   ├── box_line_intersection.py  # Recently implemented
+│   ├── pointing_pairs.py
+│   ├── box_line_intersection.py
 │   ├── naked_pairs.py
 │   ├── hidden_pairs.py
 │   ├── naked_triples.py
 │   ├── hidden_triples.py
 │   ├── naked_quads.py
-│   └── hidden_quads.py
+│   ├── hidden_quads.py
+│   ├── x_wing.py          # Recently implemented
+│   ├── swordfish.py       # Recently implemented
+│   └── y_wing.py          # Recently implemented
+│   
 ├── sudoku/
 │   ├── sudoku.py      # Main game logic and state machine
 │   ├── solver_util.py # Utility functions for solving
@@ -105,6 +109,12 @@ sudoku/
   - **HiddenPairsStrategy** - Identifies pairs of numbers that can only go in two cells in a unit
   - **HiddenTriplesStrategy** - Identifies three numbers that can only go in three cells in a unit
   - **HiddenQuadsStrategy** - Identifies four numbers that can only go in four cells in a unit
+  - **PointingPairsStrategy** - Identifies when a candidate appears only in one row/column within a box
+  - **BoxLineIntersectionStrategy** - Identifies when a candidate appears only in one box within a row/column
+  - **XWingStrategy** - Identifies when a candidate appears exactly twice in each of two rows/columns
+  - **SwordfishStrategy** - Identifies when a candidate appears in exactly three rows and three columns
+  - **YWingStrategy** - Identifies a pattern with a pivot cell and two wing cells sharing candidates
+
 
 ### SudokuLogger (logger.py)
 - Centralized logging system for the solving process
@@ -206,6 +216,7 @@ Analysis results are saved to `puzzles/analysis_results.json`, including:
 - Test framework complete with comprehensive analysis capabilities
 - Successfully solving puzzles of varying difficulty levels
 - GUI visualization for step-by-step solving process added
+- Advanced strategies (X-Wing, Swordfish, Y-Wing) implemented
 
 ### Implemented Strategies
 - [x] Basic Strategies
@@ -216,30 +227,26 @@ Analysis results are saved to `puzzles/analysis_results.json`, including:
   - Naked/Hidden Pairs
   - Naked/Hidden Triples
   - Naked/Hidden Quads
+- [x] Tough Strategies
+  - X-Wing
+  - Swordfish
+  - Y-Wing
 
 ### In Progress
-- [ ] X-Wing Strategy
-  - Core algorithm designed
-  - Initial implementation started
-- [ ] Swordfish Strategy
-  - Design phase complete
-  - Implementation pending
+- [ ] Additional Tough Strategies
+  - Simple Coloring
+  - XYZ-Wing
+  - Rectangle Patterns
+  - BUG (Bivalue Universal Grave)
 
 ### Planned Implementations
-1. Tough Strategies
-   - Simple Coloring
-   - Y-Wing
-   - XYZ-Wing
-   - W-Wing
-   - Rectangle Patterns
-   - BUG (Bivalue Universal Grave)
-2. Diabolical Strategies
+1. Diabolical Strategies
    - X-Cycles
    - XY-Chains
    - 3D Medusa
    - Jellyfish
    - Unique Rectangles
-3. Extreme Strategies
+2. Extreme Strategies
    - Almost Locked Sets
    - Finned X-Wing/Swordfish
    - Inference Chains
@@ -256,43 +263,42 @@ Strategies ordered by complexity and effectiveness:
    - Pointing pairs
    - Box/line intersection
    - Naked/Hidden pairs/triples/quads
-2. Tough Strategies (in progress)
-   - X-Wing and variants
-   - Wings (XY, XYZ, W)
+2. Tough Strategies (implemented)
+   - X-Wing
+   - Swordfish
+   - Y-Wing
+3. Additional Tough Strategies (in progress)
+   - Simple Coloring
+   - XYZ-Wing
    - Rectangle patterns
-3. Diabolical/Extreme Strategies (planned)
+   - BUG
+4. Diabolical/Extreme Strategies (planned)
    - Chains and cycles
    - Advanced pattern recognition
    - Complex inference techniques
 
 ### Recent Updates
-1. Centralized Logging System
-   - Implemented SudokuLogger class for consistent output
-   - Added support for verbose and non-verbose modes
-   - Integrated with state machine and solver classes
-   - Added detailed strategy tracking and summary statistics
+1. X-Wing Strategy Implementation
+   - Identifies patterns where a candidate appears exactly twice in each of two rows/columns
+   - Eliminates candidates from other cells in those rows/columns
+   - Significantly improves solving capability for medium-difficulty puzzles
 
-2. Command-line Interface Improvements
-   - Added support for puzzle descriptions
-   - Enhanced verbosity control
-   - Improved error handling and user feedback
+2. Swordfish Strategy Implementation
+   - Extends X-Wing concept to three rows/columns
+   - Identifies patterns where a candidate appears in exactly three rows and three columns
+   - Powerful technique for solving difficult puzzles
 
-3. Observer Pattern Refactoring
-   - Replaced observer pattern with centralized logger
-   - Maintained backward compatibility
-   - Simplified code structure and reduced redundancy
+3. Y-Wing Strategy Implementation
+   - Identifies a pattern with a pivot cell and two wing cells
+   - Pivot cell has candidates {X,Y}, wing cells have {X,Z} and {Y,Z}
+   - Eliminates candidate Z from cells that can see both wing cells
+   - Effective for breaking deadlocks in tough puzzles
 
-4. Performance Optimizations
-   - Ordered strategies by computational complexity
-   - Optimized candidate elimination routines
-   - Enhanced strategy selection process
 
-5. GUI Visualization
-   - Added interactive GUI for step-by-step solving visualization
-   - Displays board state and candidates at each step
-   - Shows strategy application details and updates
-   - Features auto-play mode with adjustable speed
-   - Highlights cells affected by each strategy
+4. Strategic Solver Enhancement
+   - Updated strategy order for optimal solving efficiency
+   - Removed display code in favor of centralized logger
+   - Improved code organization and documentation
 
 ### Testing Framework
 Features:
@@ -665,7 +671,7 @@ flowchart TD
 
 6. **GUI Visualization Components**:
    - `StepInfo`: Data container for each solving step
-   - `SudokuGUILogger`: Extends SudokuLogger to capture step history
+   - `SudokuGUILogger`: Extends SudokuLogger to capture step data
    - `SudokuGUIDisplay`: Renders the board and provides user interaction
    - `gui_main.py`: Coordinates the solving process and visualization
    - `run_gui.py`: Provides a convenient entry point

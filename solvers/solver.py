@@ -14,6 +14,8 @@ class Solver:
         if(self.mode == "Verbose"):
             print(str)
 
+
+
     def get_strategies_used(self):
         """Return list of strategies used during solving."""
         return self.strategies_used.copy()

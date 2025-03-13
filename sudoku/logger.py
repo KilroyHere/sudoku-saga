@@ -136,10 +136,9 @@ class SudokuLogger:
             for strategy, count in sorted_strategies:
                 print(f"- {strategy}: {count} times")
             
-            # In verbose mode, also show strategies in order
-            if self.verbose:
-                print("\nStrategies used in order:")
-                for i, strategy in enumerate(self.strategies_used, 1):
-                    print(f"{i}. {strategy}")
+
+            print("\nStrategies used in order:")
+            for i, strategy in enumerate(self.strategies_used, 1):
+                print(f"{i}. {strategy}")
         else:
-            print("No strategies were applied") 
+                print("No strategies were applied") 

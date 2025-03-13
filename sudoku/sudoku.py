@@ -119,7 +119,6 @@ class SudokuStateMachine:
     def checking_if_solved(self):
         """Verify if the sudoku is solved."""
         is_solved = self.solver.board.is_solved()
-        
         # Log solve check
         if self.logger:
             self.logger.log_solve_check(is_solved)

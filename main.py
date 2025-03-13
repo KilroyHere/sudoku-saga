@@ -12,7 +12,7 @@ def main():
     # Set up command-line argument parsing
     parser = argparse.ArgumentParser(description='Solve a Sudoku puzzle using various strategies.')
     parser.add_argument('-v', '--verbose', action='store_true', help='Enable verbose output with detailed solving steps')
-    parser.add_argument('-p', '--puzzle', type=str, default="000705006000040081000030050041000008060000020500000430000070000978050000300201000",
+    parser.add_argument('-p', '--puzzle', type=str, default="309000400200709000087000000750060230600904008028050041000000590000106007006000104",
                         help='Sudoku puzzle string (81 characters, use 0 or . for empty cells)')
     parser.add_argument('-d', '--description', type=str, default="Sudoku puzzle",
                         help='Description of the puzzle')

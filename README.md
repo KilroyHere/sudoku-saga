@@ -23,9 +23,16 @@ A comprehensive Python-based Sudoku solver implementing human-like solving strat
 - ✓ Naked Pairs/Triples/Quads
 - ✓ Hidden Pairs/Triples/Quads
 
+#### Tough Strategies
+- ✓ X-Wing Strategy
+- ✓ Swordfish Strategy
+- ✓ Y-Wing Strategy
+
 #### In Development
-- X-Wing Strategy
-- Swordfish Strategy
+- Simple Coloring
+- XYZ-Wing
+- Rectangle Elimination
+- BUG (Bivalue Universal Grave)
 
 
 ## Usage
@@ -138,13 +145,26 @@ python test/test_framework.py --analyze 100
 5. **Naked/Hidden Pairs/Triples/Quads**
    - Groups of cells sharing the same candidates
 
+### Tough Strategies
+1. **X-Wing Strategy**
+   - When a candidate appears exactly twice in each of two different rows/columns
+   - Forms a rectangle pattern that allows eliminations
+
+2. **Swordfish Strategy**
+   - Extension of X-Wing to three rows/columns
+   - More powerful pattern recognition for difficult puzzles
+
+3. **Y-Wing Strategy**
+   - Uses a pivot cell with two candidates and two wing cells
+   - Eliminates candidates from cells that can see both wing cells
+
+
 ### Advanced Strategies (In Development)
-- X-Wing
-- Swordfish
 - Simple Coloring
-- Y-Wing
 - XYZ-Wing
 - Rectangle Patterns
+- BUG (Bivalue Universal Grave)
+- Avoidable Rectangles
 
 ## Testing Framework
 
