@@ -478,41 +478,79 @@ Properties:
 - BacktrackingSolver: Uses Board; Used by SolverFactory
 
 ### Dependency Flow Diagram
-```
-                                ┌─────────────┐
-                                │   main.py   │
-                                └──────┬──────┘
-                                       │
-                                       ▼
-┌─────────────────┐             ┌─────────────────┐              ┌─────────────────┐
-│test_framework   │───────────▶│    SolverUtil    │────────────▶│  SolverFactory   │
-└─────────────────┘             └──────┬──────────┘              └────┬─────┬──────┘
-                                       │                              │     │
-                                       │                              │     │
-                                       ▼                              │     ▼
-                              ┌─────────────────┐                     │  ┌─────────────────┐
-                              │     Sudoku      │                     │  │BacktrackingSolver│
-                              └────────┬────────┘                     │  └─────────────────┘
-                                       │                              │
-                                       ▼                              │
-┌─────────────┐               ┌─────────────────┐                     │
-│  BoardState │◀─────────────│SudokuStateMachine│                     │
-└──────┬──────┘               └────────┬────────┘                     │
-       │                               │                              │
-       │                               ▼                              │
-       │                      ┌─────────────────┐                     │
-       │                      │  SudokuLogger   │◀────────────────────┘
-       │                      └────────┬────────┘                     │
-       │                               │                              │
-       │                               ▼                              │
-       │                      ┌─────────────────┐                     │
-       └─────────────────────▶│     Board       │◀────────────────────┘
-                              └────────┬────────┘
-                                       │
-                                       ▼
-                              ┌─────────────────┐              ┌─────────────────┐
-                              │ StrategicSolver │◀─────────────│    Strategy     │
-                              └─────────────────┘              └─────────────────┘
+```mermaid
+flowchart TD
+    %% Core components
+    Board
+    Strategy
+    
+    %% Solver implementations
+    Solver
+    BacktrackingSolver
+    StrategicSolver
+    
+    %% Utilities
+    SudokuLogger
+    SolverFactory
+    SolverUtil
+    BoardState
+    
+    %% Application components
+    SudokuStateMachine
+    Sudoku
+    
+    %% Entry points
+    main[main.py]
+    test_framework[test_framework.py]
+    
+    %% Main dependencies
+    Board --> Strategy
+    Board --> Solver
+    Board --> SudokuLogger
+    Board --> BacktrackingSolver
+    
+    Strategy --> StrategicSolver
+    
+    SudokuLogger --> StrategicSolver
+    SudokuLogger --> SudokuStateMachine
+    SudokuLogger --> Sudoku
+    SudokuLogger --> SolverUtil
+    
+    BacktrackingSolver --> SolverFactory
+    
+    StrategicSolver --> SudokuStateMachine
+    StrategicSolver --> Sudoku
+    StrategicSolver --> SolverFactory
+    
+    BoardState --> SudokuStateMachine
+    
+    SolverFactory --> SolverUtil
+    
+    Sudoku --> SolverUtil
+    
+    %% Entry point dependencies
+    SolverUtil --> main
+    SolverUtil --> test_framework
+    
+    %% Layout hints to reduce overlapping
+    Board ~~~ Strategy
+    Strategy ~~~ StrategicSolver
+    BacktrackingSolver ~~~ SolverFactory
+    SudokuStateMachine ~~~ Sudoku
+    main ~~~ test_framework
+    
+    %% Style classes with higher contrast
+    classDef core fill:#e6b3e6,stroke:#333,stroke-width:2px,color:#000;
+    classDef util fill:#b3c6ff,stroke:#333,stroke-width:1px,color:#000;
+    classDef solver fill:#b3e6b3,stroke:#333,stroke-width:1px,color:#000;
+    classDef app fill:#ffb3b3,stroke:#333,stroke-width:1px,color:#000;
+    classDef entry fill:#ffd9b3,stroke:#333,stroke-width:2px,color:#000;
+    
+    class Board,Strategy core;
+    class SudokuLogger,SolverUtil,SolverFactory,BoardState util;
+    class StrategicSolver,BacktrackingSolver,Solver solver;
+    class SudokuStateMachine,Sudoku app;
+    class main,test_framework entry;
 ```
 
 ### Key Dependency Relationships
