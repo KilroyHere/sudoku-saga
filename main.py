@@ -16,14 +16,22 @@ def main():
                         help='Sudoku puzzle string (81 characters, use 0 or . for empty cells)')
     parser.add_argument('-d', '--description', type=str, default="Sudoku puzzle",
                         help='Description of the puzzle')
+    parser.add_argument('-s', '--solver', type=str, default="Strategic",
+                        help='Solver type (Strategic or Backtracking)')
     
     args = parser.parse_args()
     
     # Validate the puzzle string
     puzzle_string = args.puzzle.replace('.', '0')  # Allow . as empty cells too
     
+    # Validate the solver type
+    if args.solver not in ["Strategic", "Backtracking"]:
+        print("Invalid solver type. Please use 'Strategic' or 'Backtracking'.")
+        sys.exit(1)
+
+    
     # Solve with specified verbosity
-    result = SolverUtil.solve_puzzle(puzzle_string, verbose=args.verbose, description=args.description)
+    result = SolverUtil.solve_puzzle( puzzle_string, verbose=args.verbose, description=args.description, solver_type=args.solver)
     
     if not result["solved"]:
         print("\nNote: This puzzle requires advanced strategies not yet implemented.")

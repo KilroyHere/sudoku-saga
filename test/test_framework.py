@@ -15,7 +15,7 @@ class SudokuTestFramework:
         self.results = []
         self.strategy_counts = {}
         
-    def analyze_puzzles(self, num_puzzles=100, verbose=False):
+    def analyze_puzzles(self, num_puzzles=100, verbose=False, solver_type="Strategic"):
         """Analyze multiple puzzles to gather statistics about strategy usage."""
         print(f"Loading {num_puzzles} puzzles...")
         quizzes, solutions = load_and_analyze_puzzles(num_puzzles)
@@ -29,7 +29,7 @@ class SudokuTestFramework:
                 print(f"\rProcessed {idx+1}/{len(puzzle_strings)} puzzles", end="")
             
             # Solve the puzzle
-            result = SolverUtil.solve_puzzle(puzzle_str, verbose=False)
+            result = SolverUtil.solve_puzzle(puzzle_str, verbose=False, solver_type=solver_type)
             
             # Update strategy counts
             for strategy in result["strategies_used"]:
@@ -50,10 +50,10 @@ class SudokuTestFramework:
             print(f"\nFinished processing {len(self.results)} puzzles")
             self.print_statistics()
     
-    def test_puzzle(self, puzzle_str, description="", verbose=False):
+    def test_puzzle(self, puzzle_str, description="", verbose=False, solver_type="Strategic"):
         """Test a single puzzle with detailed output of each step."""
         try:
-            result = SolverUtil.solve_puzzle(puzzle_str, verbose=verbose, description=description)
+            result = SolverUtil.solve_puzzle(puzzle_str, verbose=verbose, description=description, solver_type=solver_type)
         
                 
         except Exception as e:
@@ -123,6 +123,7 @@ def main():
     parser.add_argument('--test', type=str, metavar='PUZZLE', help='Test a specific puzzle string')
     parser.add_argument('--test-file', type=str, help='Test puzzles from a JSON file')
     parser.add_argument('--verbose', action='store_true', help='Print detailed progress')
+    parser.add_argument('--solver', type=str, default="Strategic", help='Solver type (Strategic or Backtracking)')
     args = parser.parse_args()
     
     if args.analyze:
@@ -130,7 +131,7 @@ def main():
         framework.save_results()
     
     elif args.test:
-        framework.test_puzzle(args.test, "Command line puzzle", verbose=args.verbose)
+        framework.test_puzzle(args.test, "Command line puzzle", verbose=args.verbose, solver_type=args.solver)      
     
     elif args.test_file:
         try:
@@ -140,7 +141,7 @@ def main():
                 print(f"Loaded {len(test_cases)} test cases")
                 
                 for case in test_cases:
-                    framework.test_puzzle(case["puzzle"], f"ID: {case['id']}", verbose=args.verbose)
+                    framework.test_puzzle(case["puzzle"], f"ID: {case['id']}", verbose=args.verbose, solver_type=args.solver)
                     try:
                         input("\nPress Enter to continue to next puzzle...")
                     except KeyboardInterrupt:

@@ -17,7 +17,7 @@ class SolverUtil:
         return SolverFactory.create_solver(board, solverType=solver_type, mode=mode)
     
     @staticmethod
-    def solve_puzzle(puzzle_str: str, verbose: bool = False, description: str = "") -> Dict[str, Any]:
+    def solve_puzzle( puzzle_str: str, verbose: bool = False, description: str = "", solver_type: str = "Strategic") -> Dict[str, Any]:
         """
         Solve a single puzzle and return detailed results
         
@@ -38,7 +38,7 @@ class SolverUtil:
             
             # Create board and solver
             board = Board(puzzle_str)
-            solver = SolverUtil.create_solver(board, mode="Default")  # Mode doesn't matter now
+            solver = SolverUtil.create_solver(board, mode="Default", solver_type=solver_type)  # Mode doesn't matter now
             
             # Create the centralized logger
             logger = SudokuLogger(verbose=verbose)
@@ -53,9 +53,14 @@ class SolverUtil:
             # Solve the puzzle
             solved = sudoku.solve()
             
-            # Print summary
-            logger.print_summary()
+            # Print summary if it's a strategic solver
+            if isinstance(solver, StrategicSolver):
+                logger.print_summary()
+            else:
+                # Print board if it's a backtracking solver
+                board.display_board()
             
+
             return {
                 "solved": solved,
                 "board": board,
