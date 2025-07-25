@@ -1,8 +1,4 @@
 # main.py
-from sudoku.sudoku import Sudoku
-from board.board import Board 
-from solvers.solver_factory import SolverFactory
-from solvers.backtracking_solver import BacktrackingSolver
 from sudoku.solver_util import SolverUtil
 import argparse
 import sys
@@ -31,7 +27,12 @@ def main():
 
     
     # Solve with specified verbosity
-    result = SolverUtil.solve_puzzle( puzzle_string, verbose=args.verbose, description=args.description, solver_type=args.solver)
+    result = SolverUtil.solve_puzzle(
+        puzzle_string,
+        verbose=args.verbose,
+        description=args.description,
+        solver_type=args.solver,
+    )
     
     if not result["solved"]:
         print("\nNote: This puzzle requires advanced strategies not yet implemented.")
@@ -39,6 +40,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
