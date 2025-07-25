@@ -12,6 +12,10 @@ from strategies.box_line_intersection import BoxLineIntersectionStrategy
 from strategies.x_wing import XWingStrategy
 from strategies.swordfish import SwordfishStrategy
 from strategies.y_wing import YWingStrategy
+from strategies.simple_coloring import SimpleColoringStrategy
+from strategies.xyz_wing import XYZWingStrategy
+from strategies.rectangle_elimination import RectangleEliminationStrategy
+from strategies.bug import BUGStrategy
 
 class StrategicSolver(Solver):
     def __init__(self, board, mode = "Default", logger=None):
@@ -31,7 +35,11 @@ class StrategicSolver(Solver):
             HiddenQuadsStrategy(self.board),        # Hidden Quads
             XWingStrategy(self.board),              # X-Wing
             SwordfishStrategy(self.board),          # Swordfish
-            YWingStrategy(self.board)               # Y-Wing
+            YWingStrategy(self.board),              # Y-Wing
+            SimpleColoringStrategy(self.board),     # Simple Coloring
+            XYZWingStrategy(self.board),            # XYZ-Wing
+            RectangleEliminationStrategy(self.board), # Rectangle Elimination
+            BUGStrategy(self.board)                 # BUG+1
 
         ]
         # State storing variables

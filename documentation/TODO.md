@@ -36,15 +36,10 @@
 
 ### High Priority (Phase 1 - Remaining Tough Strategies)
 1. Next Strategies (in order)
-   - [ ] Simple Colouring
-     - Research phase
-     - Design planning
-   - [ ] XYZ-Wing
-     - Research phase
-   - [ ] Rectangle Elimination
-     - Research phase
-   - [ ] BUG
-     - Research phase
+   - [x] Simple Colouring
+   - [x] XYZ-Wing
+   - [x] Rectangle Elimination
+   - [x] BUG
    - [ ] Avoidable Rectangles
      - Research phase
 
@@ -97,10 +92,10 @@
 1. ✅ Complete X-Wing implementation
 2. ✅ Complete Swordfish implementation
 3. ✅ Implement Y-Wing
-4. Develop Simple Colouring
-5. Add XYZ-Wing
-6. Implement Rectangle Elimination
-7. Implement BUG
+4. ✅ Develop Simple Colouring
+5. ✅ Add XYZ-Wing
+6. ✅ Implement Rectangle Elimination
+7. ✅ Implement BUG
 8. Add Avoidable Rectangles
 
 ### Phase 2: Diabolical Strategies 
