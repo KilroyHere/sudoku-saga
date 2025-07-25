@@ -232,12 +232,11 @@ Analysis results are saved to `puzzles/analysis_results.json`, including:
   - Swordfish
   - Y-Wing
 
-### In Progress
-- [ ] Additional Tough Strategies
-  - Simple Coloring
-  - XYZ-Wing
-  - Rectangle Patterns
-  - BUG (Bivalue Universal Grave)
+### Additional Tough Strategies
+- [x] Simple Coloring
+- [x] XYZ-Wing
+- [x] Rectangle Patterns
+- [x] BUG (Bivalue Universal Grave)
 
 ### Planned Implementations
 1. Diabolical Strategies
@@ -267,7 +266,7 @@ Strategies ordered by complexity and effectiveness:
    - X-Wing
    - Swordfish
    - Y-Wing
-3. Additional Tough Strategies (in progress)
+3. Additional Tough Strategies (implemented)
    - Simple Coloring
    - XYZ-Wing
    - Rectangle patterns

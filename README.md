@@ -28,11 +28,11 @@ A comprehensive Python-based Sudoku solver implementing human-like solving strat
 - ✓ Swordfish Strategy
 - ✓ Y-Wing Strategy
 
-#### In Development
-- Simple Coloring
-- XYZ-Wing
-- Rectangle Elimination
-- BUG (Bivalue Universal Grave)
+#### Additional Tough Strategies
+- ✓ Simple Coloring
+- ✓ XYZ-Wing
+- ✓ Rectangle Elimination
+- ✓ BUG (Bivalue Universal Grave)
 
 
 ## Usage
@@ -159,7 +159,7 @@ python test/test_framework.py --analyze 100
    - Eliminates candidates from cells that can see both wing cells
 
 
-### Advanced Strategies (In Development)
+### Advanced Strategies
 - Simple Coloring
 - XYZ-Wing
 - Rectangle Patterns
